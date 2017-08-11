@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/**
+ * @doc demo样式
+ * @author Heanes
+ * @time 2016-11-30 20:26:03 周三
+ */
+/****************************** 重设全局样式 ******************************/
+html {
+  color: #000;
+  background: #fff;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  word-break: break-all; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html *, body * {
+  box-sizing: inherit; }
+
+/****************************** 页面样式 ******************************/
+.demo-wrap {
+  padding: 40px; }
+
+/* 拖拽区域 */
+.something-content-demo {
+  width: 500px;
+  height: 500px;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #fff; }
+
+/*# sourceMappingURL=demo.css.map */

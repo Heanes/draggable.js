@@ -1,0 +1,234 @@
+@charset "UTF-8";
+/**
+ * @doc drag可拖拽区块
+ * @author Heanes
+ * @time 2017-03-03 18:50:25 周五
+ */
+// 窗体展示内容区域样式
+// [配置项]，【拖拽的窗体内容区域的内边距】
+$dragContentPadding: 18px;
+// [配置项]，【拖拽的窗体内容区域的边框样式】
+$dragContentBorerWidth: 10px;
+$dragContentBorerStyle: solid;
+$dragContentBorerColor: #a0b3d6;
+
+// 窗体拖拽移动操作区域
+// [配置项]，拖拽操作区域高度、背景颜色，前景颜色，边框样式，字体属性等
+$dragMoveBarHeight: 140px;
+$dragMoveBarBgColor: #258cef;
+$dragMoveBarColor: #fff;
+$dragMoveBarBorderTopWidth: 20px;
+$dragMoveBarBorerBottomWidth: 0;
+$dragMoveBarBorerStyle: solid;
+$dragMoveBarBorerColor: #f0f;
+$dragMoveBarFontSize: 14px;
+// 窗体拖拽改变窗体大小操作区域
+$dragBorderBgColor: rgba(240, 243, 249, 0.44);
+$dragBorderWidth: 60px;
+$dragBorderRadius: 8px;
+
+// 整体的边框样式
+// [配置项]，【拖拽的窗体整体的边框样式】
+$dragWrapBorerWidth: 30px;
+$dragWrapBorerStyle: solid;
+$dragWrapBorerColor:rgba(248, 233, 104, 0.42);
+// [配置项]，【拖拽的窗体内容区域的边框样式】
+$dragWrapBoxShadow: 2px 2px 4px rgba(130, 130, 130, .5);
+
+$originContentWidth: 500px;
+$originContentHeight: 500px;
+// 窗体展示内容区域样式
+// [计算项]【拖拽的窗体内容区域的宽高】
+$dragContentWidth: $originContentWidth + $dragContentPadding * 2 + $dragContentBorerWidth * 2;
+$dragContentHeight: $originContentHeight + $dragContentPadding * 2 + $dragContentBorerWidth * 2;
+
+// 窗体拖拽移动操作区域
+// [计算项]【窗体拖拽移动操作区域的宽高】
+$dragMoveBarWidth: $dragContentWidth + (2 * $dragContentPadding) + ($dragContentBorerWidth * 2);;
+$dragMoveBarHeight: $dragMoveBarHeight + $dragMoveBarBorderTopWidth + $dragMoveBarBorerBottomWidth;;
+
+.drag-wrap {
+  width: $dragContentWidth + ($dragBorderWidth * 2) + ($dragWrapBorerWidth * 2);
+  height: $dragContentHeight + ($dragBorderWidth * 2) + $dragMoveBarHeight + ($dragWrapBorerWidth * 2);
+}
+
+.drag-wrap {
+  position: relative;
+  border: $dragWrapBorerWidth $dragWrapBorerStyle $dragWrapBorerColor;
+  box-shadow: $dragWrapBoxShadow;
+  display:inline-block;
+  border-radius:$dragBorderRadius;
+}
+
+.drag-wrap .drag-operate-wrap .drag-move-bar{
+  position: absolute;
+  width: $dragMoveBarWidth;
+  height: $dragMoveBarHeight;
+  left: $dragBorderWidth;
+  top: $dragBorderWidth;
+  border: $dragMoveBarBorderTopWidth $dragMoveBarBorerStyle $dragMoveBarBorerColor;
+  border-bottom-width: $dragMoveBarBorerBottomWidth;
+  margin-bottom: 0;
+  font-size: $dragMoveBarFontSize;
+  font-weight: normal;
+  line-height: $dragMoveBarHeight;
+  padding: 0 10px;
+  background-color: $dragMoveBarBgColor;
+  color:$dragMoveBarColor;
+  cursor: move;
+}
+
+.drag-wrap .drag-operate-wrap .drag-move-bar *{
+  font-size: inherit;
+  font-weight: inherit;
+  margin:0;
+}
+
+.drag-wrap .drag-content {
+  position: absolute;
+  width: $dragContentWidth;
+  height: $dragContentHeight;
+  padding: $dragContentPadding;
+  bottom: $dragBorderWidth;
+  left: $dragBorderWidth;
+  border: $dragContentBorerWidth $dragWrapBorerStyle $dragContentBorerColor;
+  overflow: auto;
+}
+
+/* 当窗体大小变得太小时，原始内容应出现滚动条 */
+/*.drag-wrap .drag-content > *{overflow:auto;}*/
+
+// [计算项]【拖拽改变大小的水平边框的宽度、竖直边框的高度】
+$dragBorderHorizontalWidth: $dragContentWidth - $dragContentBorerWidth * 2;
+$dragBorderVerticalHeight: $dragContentHeight + $dragMoveBarHeight - $dragContentBorerWidth * 2;;
+
+// [计算项]【拖拽改变大小的四角的宽高(正方形)】
+$dragBorderCornerSize: $dragBorderWidth + ($dragContentBorerWidth * 1);
+
+
+.drag-wrap .drag-operate-wrap .drag-border {
+  background-color: $dragBorderBgColor;
+  &.drag-border-top,
+  &.drag-border-bottom,
+  &.drag-border-right,
+  &.drag-border-left {
+    position: absolute;
+    z-index: 2;
+  }
+  &.drag-border-top,
+  &.drag-border-bottom {
+    left: $dragBorderCornerSize;
+    width: $dragBorderHorizontalWidth;
+    height: $dragBorderWidth;
+    cursor: ns-resize;
+  }
+  // 上边框，从上方拖动[高度]
+  &.drag-border-top {
+    top: 0;
+  }
+  // 下边框，从上方拖动[高度]
+  &.drag-border-bottom {
+    bottom: 0;
+  }
+  &.drag-border-right,
+  &.drag-border-left {
+    top: $dragBorderCornerSize;
+    width: $dragBorderWidth;
+    height: $dragBorderVerticalHeight;
+    cursor: e-resize;
+  }
+  // 左边框，从左方拖动[宽度]
+  &.drag-border-left {
+    left: 0;
+  }
+  // 右边框，从右方拖动[宽度]
+  &.drag-border-right {
+    right: 0;
+  }
+  &.drag-border-top-left,
+  &.drag-border-top-right,
+  &.drag-border-bottom-left,
+  &.drag-border-bottom-right {
+    position: absolute;
+    width: $dragBorderCornerSize;
+    height: $dragBorderCornerSize;
+    z-index: 3;
+  }
+  &.drag-border-top-left,
+  &.drag-border-top-right {
+    top: 0;
+  }
+  &.drag-border-top-left,
+  &.drag-border-bottom-left {
+    left: 0;
+  }
+  &.drag-border-top-right,
+  &.drag-border-bottom-right {
+    right: 0;
+  }
+  &.drag-border-bottom-left,
+  &.drag-border-bottom-right {
+    bottom: 0;
+  }
+  &.drag-border-top-left,
+  &.drag-border-bottom-right {
+    cursor: nw-resize;
+  }
+  &.drag-border-bottom-left,
+  &.drag-border-top-right {
+    cursor: ne-resize;
+  }
+
+  // 左上角，从左上方同时拖动宽高
+  &.drag-border-top-left {
+    border-top-left-radius: $dragBorderRadius;
+  }
+  // 右上角，从右上方同时拖动宽高
+  &.drag-border-top-right {
+    border-top-right-radius: $dragBorderRadius;
+  }
+
+  // 左下角，从左下方同时拖动宽高
+  &.drag-border-bottom-left {
+    border-bottom-left-radius: $dragBorderRadius;
+  }
+  // 右下角，从右下方同时拖动宽高
+  &.drag-border-bottom-right {
+    border-bottom-right-radius: $dragBorderRadius;
+  }
+
+  // 为调试方便而上色
+  // 上边框，从上方拖动[高度]
+  &.drag-border-top {
+    background-color:#efdfed;
+  }
+  // 下边框，从上方拖动[高度]
+  &.drag-border-bottom {
+    background-color:#ceb455;
+  }
+  // 左边框，从左方拖动[宽度]
+  &.drag-border-left {
+    background-color:#cdef75;
+  }
+  // 右边框，从右方拖动[宽度]
+  &.drag-border-right {
+    background-color:#a7bbef;
+  }
+  // 左上角，从左上方同时拖动宽高
+  &.drag-border-top-left {
+    background-color:#a7bbef;
+  }
+  // 右上角，从右上方同时拖动宽高
+  &.drag-border-top-right {
+    background-color:#d866ef;
+  }
+
+  // 左下角，从左下方同时拖动宽高
+  &.drag-border-bottom-left {
+    background-color:#89ef5a;
+  }
+  // 右下角，从右下方同时拖动宽高
+  &.drag-border-bottom-right {
+    background-color:#ef7f44;
+  }
+}

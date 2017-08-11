@@ -1,0 +1,11 @@
+.svn
+
+.idea
+.settings
+.project
+
+node_modules
+doc/**/*.map
+webpack/**/*.css
+webpack/**/*.map
+/**/*.log

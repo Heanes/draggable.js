@@ -1,0 +1,117 @@
+@charset "UTF-8";
+/**
+ * @doc drag可拖拽区块
+ * @author Heanes
+ * @time 2017-03-03 18:50:25 周五
+ */
+.drag-wrap {
+  width: 736px;
+  height: 896px; }
+
+.drag-wrap {
+  position: relative;
+  border: 30px solid rgba(248, 233, 104, 0.42);
+  box-shadow: 2px 2px 4px rgba(130, 130, 130, 0.5);
+  display: inline-block;
+  border-radius: 8px; }
+
+.drag-wrap .drag-operate-wrap .drag-move-bar {
+  position: absolute;
+  width: 612px;
+  height: 160px;
+  left: 60px;
+  top: 60px;
+  border: 20px solid #f0f;
+  border-bottom-width: 0;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 160px;
+  padding: 0 10px;
+  background-color: #258cef;
+  color: #fff;
+  cursor: move; }
+
+.drag-wrap .drag-operate-wrap .drag-move-bar * {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0; }
+
+.drag-wrap .drag-content {
+  position: absolute;
+  width: 556px;
+  height: 556px;
+  padding: 18px;
+  bottom: 60px;
+  left: 60px;
+  border: 10px solid #a0b3d6;
+  overflow: auto; }
+
+/* 当窗体大小变得太小时，原始内容应出现滚动条 */
+/*.drag-wrap .drag-content > *{overflow:auto;}*/
+.drag-wrap .drag-operate-wrap .drag-border {
+  background-color: rgba(240, 243, 249, 0.44); }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    position: absolute;
+    z-index: 2; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+    left: 70px;
+    width: 536px;
+    height: 60px;
+    cursor: ns-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
+    top: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+    bottom: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    top: 70px;
+    width: 60px;
+    height: 696px;
+    cursor: e-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    left: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
+    right: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    z-index: 3; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+    top: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+    left: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    right: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    bottom: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    cursor: nw-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+    cursor: ne-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
+    border-top-left-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+    border-top-right-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+    border-bottom-left-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    border-bottom-right-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
+    background-color: #efdfed; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+    background-color: #ceb455; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    background-color: #cdef75; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
+    background-color: #a7bbef; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
+    background-color: #a7bbef; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+    background-color: #d866ef; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+    background-color: #89ef5a; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    background-color: #ef7f44; }
+
+/*# sourceMappingURL=drag.css.map */
