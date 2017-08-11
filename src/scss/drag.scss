@@ -44,7 +44,7 @@ $dragContentHeight: $originContentHeight + $dragContentPadding * 2 + $dragConten
 
 // 窗体拖拽移动操作区域
 // [计算项]【窗体拖拽移动操作区域的宽高】
-$dragMoveBarWidth: $dragContentWidth + (2 * $dragContentPadding) + ($dragContentBorerWidth * 2);;
+$dragMoveBarWidth: $dragContentWidth;
 $dragMoveBarHeight: $dragMoveBarHeight + $dragMoveBarBorderTopWidth + $dragMoveBarBorerBottomWidth;;
 
 .drag-wrap {
