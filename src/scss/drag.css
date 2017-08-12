@@ -5,8 +5,8 @@
  * @time 2017-03-03 18:50:25 周五
  */
 .drag-wrap {
-  width: 736px;
-  height: 896px; }
+  width: 836px;
+  height: 756px; }
 
 .drag-wrap {
   position: relative;
@@ -17,30 +17,34 @@
 
 .drag-wrap .drag-operate-wrap .drag-move-bar {
   position: absolute;
-  width: 556px;
-  height: 160px;
+  width: 656px;
+  height: 120px;
   left: 60px;
   top: 60px;
-  border: 20px solid #f0f;
-  border-bottom-width: 0;
+  border-style: solid;
+  border-color: #c9e7e4;
+  border-top-width: 20px;
+  border-bottom-width: 20px;
+  border-left-width: 20px;
+  border-right-width: 20px;
   margin-bottom: 0;
   font-size: 14px;
   font-weight: normal;
-  line-height: 160px;
+  line-height: 80px;
   padding: 0 10px;
   background-color: #258cef;
   color: #fff;
   cursor: move; }
 
 .drag-wrap .drag-operate-wrap .drag-move-bar * {
+  margin: 0;
   font-size: inherit;
-  font-weight: inherit;
-  margin: 0; }
+  font-weight: inherit; }
 
 .drag-wrap .drag-content {
   position: absolute;
-  width: 556px;
-  height: 556px;
+  width: 656px;
+  height: 456px;
   padding: 18px;
   bottom: 60px;
   left: 60px;
@@ -54,29 +58,59 @@
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
     position: absolute;
     z-index: 2; }
-  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
-    left: 70px;
-    width: 536px;
-    height: 60px;
-    cursor: ns-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
     top: 0; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
     bottom: 0; }
-  .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
-    top: 70px;
-    width: 60px;
-    height: 696px;
-    cursor: e-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+    cursor: ns-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
+    left: 70px;
+    width: 636px;
+    height: 60px;
+    cursor: ns-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+    left: 70px;
+    width: 636px;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    cursor: ns-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
     left: 0; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
     right: 0; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    cursor: e-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    top: 70px;
+    width: 60px;
+    height: 556px;
+    cursor: e-resize; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
+    top: 70px;
+    width: 60px;
+    height: 556px;
+    cursor: e-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
     position: absolute;
+    z-index: 3; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
     width: 70px;
     height: 70px;
-    z-index: 3; }
+    border-top-left-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+    width: 70px;
+    height: 70px;
+    border-top-right-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+    width: 70px;
+    height: 70px;
+    border-bottom-left-radius: 8px; }
+  .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    width: 70px;
+    height: 70px;
+    border-bottom-right-radius: 8px; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
     top: 0; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
