@@ -82,37 +82,43 @@ $dragWrapWidth: $dragContentWidth + ($dragBorderLeftSize + $dragBorderRightSize)
 $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSize) + $dragMoveBarHeight + ($dragWrapBorderSize * 2);
 
 .drag-wrap {
-  width: $dragWrapWidth;
-  height: $dragWrapHeight;
+  /*
   top: $originContentTop - ($dragContentPadding + $dragContentBorderWidth + $dragBorderTopSize + $dragWrapBorderSize + $dragMoveBarHeight);
   left: $originContentLeft - ($dragContentPadding + $dragContentBorderWidth + $dragBorderLeftSize + $dragWrapBorderSize);
+  width: $dragWrapWidth;
+  height: $dragWrapHeight;
+  */
 }
 
 .drag-wrap {
   position: absolute;
-  border: $dragWrapBorderSize $dragWrapBorderStyle $dragWrapBorderColor;
-  box-shadow: $dragWrapBoxShadow;
   display: inline-block;
+  /*
+  border: $dragWrapBorderSize $dragWrapBorderStyle $dragWrapBorderColor;
   border-radius: $dragBorderRadius;
+  box-shadow: $dragWrapBoxShadow;
+  */
 }
 
 .drag-wrap .drag-operate-wrap .drag-move-bar{
   position: absolute;
-  width: $dragMoveBarWidth;
-  height: $dragMoveBarHeight;
+ /*
   left: $dragBorderLeftSize;
   top: $dragBorderTopSize;
+  width: $dragMoveBarWidth;
+  height: $dragMoveBarHeight;
+  padding: 0 10px;
   border-style: $dragMoveBarBorderStyle;
   border-color: $dragMoveBarBorderColor;
   border-top-width: $dragMoveBarBorderTopSize;
   border-bottom-width: $dragMoveBarBorderBottomSize;
   border-left-width: $dragMoveBarBorderLeftSize;
   border-right-width: $dragMoveBarBorderRightSize;
+  line-height: $dragMoveBarHeight - ($dragMoveBarBorderTopSize + $dragMoveBarBorderBottomSize);
+  */
   margin-bottom: 0;
   font-size: $dragMoveBarFontSize;
   font-weight: normal;
-  line-height: $dragMoveBarHeight - ($dragMoveBarBorderTopSize + $dragMoveBarBorderBottomSize);
-  padding: 0 10px;
   background-color: $dragMoveBarBgColor;
   color: $dragMoveBarColor;
   cursor: move;
@@ -127,12 +133,13 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
 
 .drag-wrap .drag-content {
   position: absolute;
-  width: $dragContentWidth;
-  height: $dragContentHeight;
+  /*
   left: $dragBorderLeftSize;
   bottom: $dragBorderBottomSize;
+  width: $dragContentWidth;
+  height: $dragContentHeight;
   padding: $dragContentPadding;
-  border: $dragContentBorderWidth $dragWrapBorderStyle $dragContentBorderColor;
+  border: $dragContentBorderWidth $dragWrapBorderStyle $dragContentBorderColor;*/
   overflow: auto;
   background-color: $dragContentBgColor;
 }
@@ -162,16 +169,20 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
     cursor: ns-resize;
   }
   &.drag-border-top {
+    /*
     left: $dragBorderCornerTopLeftWidth;
     width: $dragBorderHorizontalWidth;
     height: $dragBorderTopSize;
+    */
     cursor: ns-resize;
   }
   &.drag-border-bottom {
+    /*
     left: $dragBorderCornerBottomLeftWidth;
     width: $dragBorderHorizontalWidth;
     height: $dragBorderBottomSize;
     line-height: $dragBorderBottomSize;
+    */
     padding: 0 10px;
     cursor: ns-resize;
   }
@@ -189,15 +200,19 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
     cursor: e-resize;
   }
   &.drag-border-left {
+    /*
     top: $dragBorderCornerTopLeftHeight;
     width: $dragBorderLeftSize;
     height: $dragBorderVerticalHeight;
+    */
     cursor: e-resize;
   }
   &.drag-border-right {
+    /*
     top: $dragBorderCornerTopRightHeight;
     width: $dragBorderRightSize;
     height: $dragBorderVerticalHeight;
+    */
     cursor: e-resize;
   }
 
@@ -211,27 +226,35 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
   }
   // 左上角，从左上方同时拖动宽高
   &.drag-border-top-left {
+    /*
     width: $dragBorderCornerTopLeftWidth;
     height: $dragBorderCornerTopLeftHeight;
     border-top-left-radius: $dragBorderRadius;
+    */
   }
   // 右上角，从右上方同时拖动宽高
   &.drag-border-top-right {
+    /*
     width: $dragBorderCornerTopRightWidth;
     height: $dragBorderCornerTopRightHeight;
     border-top-right-radius: $dragBorderRadius;
+    */
   }
   // 左下角，从左下方同时拖动宽高
   &.drag-border-bottom-left {
+    /*
     width: $dragBorderCornerBottomLeftWidth;
     height: $dragBorderCornerBottomLeftHeight;
     border-bottom-left-radius: $dragBorderRadius;
+    */
   }
   // 右下角，从右下方同时拖动宽高
   &.drag-border-bottom-right {
+    /*
     width: $dragBorderCornerBottomRightWidth;
     height: $dragBorderCornerBottomRightHeight;
     border-bottom-right-radius: $dragBorderRadius;
+    */
   }
 
   &.drag-border-top-left,
@@ -257,24 +280,6 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
   &.drag-border-bottom-left,
   &.drag-border-top-right {
     cursor: ne-resize;
-  }
-
-  // 左上角，从左上方同时拖动宽高
-  &.drag-border-top-left {
-    border-top-left-radius: $dragBorderRadius;
-  }
-  // 右上角，从右上方同时拖动宽高
-  &.drag-border-top-right {
-    border-top-right-radius: $dragBorderRadius;
-  }
-
-  // 左下角，从左下方同时拖动宽高
-  &.drag-border-bottom-left {
-    border-bottom-left-radius: $dragBorderRadius;
-  }
-  // 右下角，从右下方同时拖动宽高
-  &.drag-border-bottom-right {
-    border-bottom-right-radius: $dragBorderRadius;
   }
 
   // 为调试方便而上色
@@ -313,14 +318,14 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
   }
 }
 
-.drag-wrap .drag-status-info{
+.drag-wrap .drag-status-bar{
   color: #fff;
   font-size: 12px;
 }
-.drag-wrap .drag-status-info .info-item{
+.drag-wrap .drag-status-bar .info-item{
   margin-right:10px;
 }
 
-.drag-wrap .drag-status-info .info-item .field{
+.drag-wrap .drag-status-bar .info-item .field{
   margin: 0 4px;
 }

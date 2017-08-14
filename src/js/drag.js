@@ -22,7 +22,6 @@
             bottomSize:     '60px',
             leftSize:       '60px',
             rightSize:      '60px',
-            borderRadius:   '4px',
             topColor:       '#efdfed',
             bottomColor:    '#ceb455',
             leftColor:      '#cdef75',
@@ -39,22 +38,24 @@
         // 拖拽移动框的配置
         dragMoveBar: {
             height:           '80px',
+            padding:          '0 10px',
             bgColor:          '#258cef',
             color:            '#fff',
-            borderTopSize:    '20px',
-            borderBottomSize: '20px',
-            borderLeftSize:   '20px',
-            borderRightSize:  '20px',
+            borderTopWidth:    '20px',
+            borderBottomWidth: '20px',
+            borderLeftWidth:   '20px',
+            borderRightWidth:  '20px',
             borderStyle:      'solid',
             borderColor:      '#c9e7e4',
             fontSize:         '14px'
         },
         // 整体样式
         dragWrap: {
-            borderSize:     '30px',
+            borderWidth:    '30px',
             borderStyle:    'solid',
-            BorderColor:    'rgba(248, 233, 104, 0.42)',
+            borderColor:    'rgba(248, 233, 104, 0.42)',
             boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+            borderRadius:   '8px',
         },
         // 窗体移动时的事件
         onWindowMove: undefined
@@ -481,10 +482,10 @@
                     if(dynamic.resizeBorderPlace === 'top' || dynamic.resizeBorderPlace === 'top-left' || dynamic.resizeBorderPlace === 'top-right'){
                         offsetY = 0 - offsetY;
                     }
-                    dragWrapNowSize.height = calculated.dragWrap.height + offsetY;
-                    dragContentNowSize.height = calculated.dragContent.height + offsetY;
-                    contentNowSize.height = calculated.originContent.height + offsetY;
-                    dragBorderVerticalNowSize .height = calculated.dragBorder.verticalHeight + offsetY;
+                    dragWrapNowSize.height              = calculated.dragWrap.height + offsetY;
+                    dragContentNowSize.height           = calculated.dragContent.height + offsetY;
+                    contentNowSize.height               = calculated.originContent.height + offsetY;
+                    dragBorderVerticalNowSize.height    = calculated.dragBorder.verticalHeight + offsetY;
 
                     // 当时从上方或左方拖动时才改变水平方向定位
                     if(dynamic.resizeBorderPlace === 'top' || dynamic.resizeBorderPlace === 'top-left' || dynamic.resizeBorderPlace === 'top-right'){
@@ -498,15 +499,15 @@
                         offsetX = 0 - offsetX;
                     }
                     // 鼠标向上移动时，偏移量为负值
-                    dragWrapNowSize.width = calculated.dragWrap.width + offsetX;
-                    dragContentNowSize.width = calculated.dragContent.width + offsetX;
-                    dragMoveBarNowSize.width = calculated.dragMoveBar.width + offsetX;
-                    contentNowSize.width = calculated.originContent.width + offsetX;
-                    dragBorderHorizontalNowSize.width = calculated.dragBorder.horizontalWidth + offsetX;
+                    dragWrapNowSize.width               = calculated.dragWrap.width + offsetX;
+                    dragContentNowSize.width            = calculated.dragContent.width + offsetX;
+                    dragMoveBarNowSize.width            = calculated.dragMoveBar.width + offsetX;
+                    contentNowSize.width                = calculated.originContent.width + offsetX;
+                    dragBorderHorizontalNowSize.width   = calculated.dragBorder.horizontalWidth + offsetX;
 
                     // 当时从上方或左方拖动时才改变竖直方向定位
                     if(dynamic.resizeBorderPlace === 'left' || dynamic.resizeBorderPlace === 'top-left' || dynamic.resizeBorderPlace === 'bottom-left'){
-                        nowPosition.left = dynamic.currentPosition.left - moveOffset.offsetX;
+                        nowPosition.left = dynamic.currentPosition.left + moveOffset.offsetX;
                     }
                 }
 
@@ -531,25 +532,90 @@
             return this;
         },
 
-        showStatusInfo: function (options) {
-            if(!options.showStatusBar) return this;
-            // 0. 原始position originPositionInfo
-            // 1. 当前position currentPositionInfo
-            // 2. 当前此次移动的偏移position moveOffsetInfo
-            // 3. 累积移动的偏移position moveOffsetTotalInfo
-            let $dragStatusInfo = $(this.template.dratStatusInfo);
-            let dynamic = this.data.dynamic;
+        render: function (options) {
 
-            let $moveOffsetInfo = '<span class="info-item move-offset-info"><span class="field">x :</span><span class="value">' + dynamic.moveOffset.offsetX
-                + '<span><span class="field">y :</span><span class="value">' + dynamic.moveOffset.offsetY + '</span></span>';
-            let $moveOffsetTotalInfo = '<span class="info-item move-offset-total-info"><span class="field">x :</span><span class="value">' + dynamic.moveOffsetTotal.offsetX
-                + '<span><span class="field">y :</span><span class="value">' + dynamic.moveOffsetTotal.offsetY + '</span></span>';
-            let windowInfo = '';
-            $dragStatusInfo.append($moveOffsetInfo).append($moveOffsetTotalInfo);
-            this.__inElement.$dragBorderBottom.empty().append($dragStatusInfo);
+            this.calculateRenderSize(options);
+
+            this.buildDom(options);
+
+            this.injectStyle(options);
+
+            this.showStatusInfo(options);
+
+            this.bindMouseEvent(options);
+
+            return this;
         },
 
-        render: function (options) {
+        /**
+         * @doc 计算显示相关的数值
+         * @param options
+         * @returns {Draggable}
+         */
+        calculateRenderSize: function (options) {
+            // 根据配置计算得到初始化时的显示信息
+            // 1. 原始内容的position
+            let originContentPosition = getTargetPosition(this.$element);
+            let originContentWindow = getTargetWindowOuterSize(this.$element);
+
+            let origin  = this.data.origin, dynamic = this.data.dynamic;
+
+            // [计算项] 1.【原始内容窗体的宽高】
+            origin.originContent = {
+                width:  originContentWindow.outerWidth,
+                height: originContentWindow.outerHeight,
+                top:    originContentPosition.top,
+                left:   originContentPosition.left
+            };
+            // [计算项] 2.【拖拽的窗体内容区域的宽高】
+            let dragContentWidth = origin.originContent.width + parseInt(options.dragContent.padding) * 2 + parseInt(options.dragContent.borderWidth) * 2,
+                dragContentHeight = origin.originContent.height + parseInt(options.dragContent.padding) * 2 + parseInt(options.dragContent.borderWidth) * 2;
+
+            origin.dragContent = {
+                width:  dragContentWidth,
+                height: dragContentHeight
+            };
+            // [计算项] 3.【窗体拖拽移动操作区域的宽高】
+            origin.dragMoveBar = {
+                width:  origin.dragContent.width,
+                height: parseInt(options.dragMoveBar.height) + parseInt(options.dragMoveBar.borderTopWidth) + parseInt(options.dragMoveBar.borderTopWidth)
+            };
+            // [计算项] 4.【拖拽改变大小的水平边框的宽度、竖直边框的高度】
+            origin.dragBorder = {
+                horizontalWidth:   origin.dragContent.width - parseInt(options.dragContent.borderWidth) * 2,
+                verticalHeight:    origin.dragContent.height + origin.dragMoveBar.height - parseInt(options.dragContent.borderWidth) * 2,
+                cornerTopLeft:     {
+                    width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContent.borderWidth),
+                    height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
+                },
+                cornerTopRight:    {
+                    width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContent.borderWidth),
+                    height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
+                },
+                cornerBottomLeft:  {
+                    width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContent.borderWidth),
+                    height: parseInt(options.dragBorder.bottomSize) + parseInt(options.dragContent.borderWidth),
+                },
+                cornerBottomRight: {
+                    width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContent.borderWidth),
+                    height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
+                },
+            };
+            // 整个窗体的宽高
+            origin.dragWrap = {
+                width:  dragContentWidth + parseInt(options.dragBorder.leftSize) + parseInt(options.dragBorder.rightSize) + (parseInt(options.dragWrap.borderWidth) * 2),
+                height: dragContentHeight + parseInt(options.dragBorder.topSize) + parseInt(options.dragBorder.bottomSize) + origin.dragMoveBar.height + parseInt(options.dragWrap.borderWidth) * 2,
+                top:    origin.originContent.top - (parseInt(options.dragContent.padding) + parseInt(options.dragContent.borderWidth) + parseInt(options.dragBorder.topSize) + parseInt(options.dragWrap.borderWidth) + origin.dragMoveBar.height),
+                left:   origin.originContent.left - (parseInt(options.dragContent.padding) + parseInt(options.dragContent.borderWidth) + parseInt(options.dragBorder.leftSize) + parseInt(options.dragWrap.borderWidth)),
+            };
+            dynamic.currentPosition.top = origin.dragWrap.top;
+            dynamic.currentPosition.left = origin.dragWrap.left;
+            this.data.calculated = deepCopy(origin);
+
+            return this;
+        },
+
+        buildDom: function (options) {
             let $dragWrap = $(this.template.dragWrap);
             let $dragOperateWrap = $(this.template.dragOperateWrap);
 
@@ -573,6 +639,7 @@
                 .append($dragBorderBottomLeft).append($dragBorderBottom).append($dragBorderBottomRight);
 
             let $dragContent = $(this.template.dragContent);
+
             this.$element.wrap($dragContent);
 
             let $dragContentNew = this.$element.parent();
@@ -592,82 +659,114 @@
             this.__inElement.$dragBorderLeft        = $dragBorderLeft;
             this.__inElement.$dragBorderRight       = $dragBorderRight;
             this.__inElement.$dragBorderTopLeft     = $dragBorderTopLeft;
-            this.__inElement.$dragBorderTopRight    = $dragBorderTopLeft;
+            this.__inElement.$dragBorderTopRight    = $dragBorderTopRight;
             this.__inElement.$dragBorderBottomLeft  = $dragBorderBottomLeft;
-
-            this.calculateRenderSize(options);
-
-            this.bindMouseEvent(options);
-
-            return this;
+            this.__inElement.$dragBorderBottomRight = $dragBorderBottomRight;
         },
 
-        /**
-         * @doc 计算显示相关的数值
-         * @param options
-         * @returns {Draggable}
-         */
-        calculateRenderSize: function (options) {
-            // 根据配置计算得到初始化时的显示信息
-            // 1. 原始内容的position
-            let originContentPosition = getTargetPosition(this.__inElement.$originContent);
-            let originContentWindow = getTargetWindowOuterSize(this.__inElement.$originContent);
-
+        injectStyle: function (options) {
             let origin  = this.data.origin, dynamic = this.data.dynamic;
+            // 添加样式
+            // $originContent
+            this.__inElement.$originContent.css({
+                left: 'unset',
+                top:  'unset'
+            });
+            // $dragContent
+            this.__inElement.$dragContent.css({
+                left:       options.dragBorder.leftSize,
+                bottom:     options.dragBorder.bottomSize,
+                width:      origin.dragContent.width + 'px',
+                height:     origin.dragContent.height + 'px',
+                border:     options.dragContent.borderWidth + ' ' + options.dragContent.borderStyle + ' ' + options.dragContent.borderColor,
+                padding:    options.dragContent.padding
+            });
 
-            // [计算项] 1.【原始内容窗体的宽高】
-            origin.originContent = {
-                width:  originContentWindow.outerWidth,
-                height: originContentWindow.outerHeight,
-                top:    originContentPosition.top,
-                left:   originContentPosition.left
-            };
-            // [计算项] 2.【拖拽的窗体内容区域的宽高】
-            let dragContentWidth = origin.originContent.width + parseInt(options.dragContent.padding) * 2 + parseInt(options.dragContent.borderWidth) * 2,
-                dragContentHeight = origin.originContent.height + parseInt(options.dragContent.padding) * 2 + parseInt(options.dragContent.borderWidth) * 2;
+            // $dragMoveBar
+            this.__inElement.$dragMoveBar.css({
+                left:                   options.dragBorder.leftSize,
+                top:                    options.dragBorder.bottomSize,
+                width:                  origin.dragMoveBar.width + 'px',
+                height:                 origin.dragMoveBar.height + 'px',
+                'line-height':          parseInt(origin.dragMoveBar.height -  parseInt(options.dragMoveBar.borderTopWidth) - parseInt(options.dragMoveBar.borderTopWidth)) + 'px',
+                padding:                options.dragMoveBar.padding,
+                'border-style':         options.dragMoveBar.borderStyle,
+                'border-color':         options.dragMoveBar.borderColor,
+                'border-top-width':     options.dragMoveBar.borderTopWidth,
+                'border-bottom-width':  options.dragMoveBar.borderTopWidth,
+                'border-left-width':    options.dragMoveBar.borderTopWidth,
+                'border-right-width':   options.dragMoveBar.borderRightWidth,
+            });
+            this.__inElement.$dragBorderTop.css({
+                left:   origin.dragBorder.cornerTopLeft.width + 'px',
+                width:  origin.dragBorder.horizontalWidth + 'px',
+                height: options.dragBorder.topSize,
+            });
+            this.__inElement.$dragBorderBottom.css({
+                left:   origin.dragBorder.cornerBottomLeft.width + 'px',
+                width:  origin.dragBorder.horizontalWidth + 'px',
+                height: options.dragBorder.bottomSize,
+            });
+            this.__inElement.$dragBorderLeft.css({
+                top:    origin.dragBorder.cornerTopLeft.height + 'px',
+                width:  options.dragBorder.leftSize,
+                height: origin.dragBorder.verticalHeight + 'px',
+            });
+            this.__inElement.$dragBorderRight.css({
+                top:    origin.dragBorder.cornerTopRight.height + 'px',
+                width:  options.dragBorder.rightSize,
+                height: origin.dragBorder.verticalHeight + 'px',
+            });
 
-            origin.dragContent = {
-                width:  dragContentWidth,
-                height: dragContentHeight
-            };
-            // [计算项] 3.【窗体拖拽移动操作区域的宽高】
-            origin.dragMoveBar = {
-                width:  origin.dragContent.width,
-                height: parseInt(options.dragMoveBar.height) + parseInt(options.dragMoveBar.borderTopSize) + parseInt(options.dragMoveBar.borderBottomSize)
-            };
-            // [计算项] 4.【拖拽改变大小的水平边框的宽度、竖直边框的高度】
-            origin.dragBorder = {
-                horizontalWidth:   origin.dragContent.width - parseInt(options.dragContent.borderWidth) * 2,
-                verticalHeight:    origin.dragContent.width + origin.dragMoveBar.height - parseInt(options.dragContent.borderWidth) * 2,
-                cornerTopLeft:     {
-                    width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContent.borderWidth),
-                    height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
-                },
-                cornerTopRight:    {
-                    width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContent.borderWidth),
-                    height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
-                },
-                cornerBottomLeft:  {
-                    width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContent.borderWidth),
-                    height: parseInt(options.dragBorder.bottomSize) + parseInt(options.dragContent.borderWidth),
-                },
-                cornerBottomRight: {
-                    width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContent.borderWidth),
-                    height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
-                },
-            };
-            // 整个窗体的宽高
-            origin.dragWrap = {
-                width:  dragContentWidth + parseInt(options.dragBorder.leftSize) + parseInt(options.dragBorder.rightSize) + parseInt(options.dragWrap.borderSize) * 2,
-                height: dragContentWidth + parseInt(options.dragBorder.topSize) + parseInt(options.dragBorder.bottomSize) + origin.dragMoveBar.height + parseInt(options.dragWrap.borderSize) * 2,
-                top:    origin.originContent.top - (parseInt(options.dragContent.padding) + parseInt(options.dragContent.borderWidth) + parseInt(options.dragBorder.topSize) + parseInt(options.dragWrap.borderSize) + origin.dragMoveBar.height),
-                left:   origin.originContent.top - (parseInt(options.dragContent.padding) + parseInt(options.dragContent.borderWidth) + parseInt(options.dragBorder.leftSize) + parseInt(options.dragWrap.borderSize)),
-            };
-            dynamic.currentPosition.top = origin.dragWrap.top;
-            dynamic.currentPosition.left = origin.dragWrap.left;
-            this.data.calculated = deepCopy(origin);
-            this.showStatusInfo(options);
-            return this;
+            this.__inElement.$dragBorderTopLeft.css({
+                width:                      origin.dragBorder.cornerTopLeft.width + 'px',
+                height:                     origin.dragBorder.cornerTopLeft.height + 'px',
+                'border-top-left-radius':   options.dragWrap.borderRadius
+            });
+            this.__inElement.$dragBorderTopRight.css({
+                width:                      origin.dragBorder.cornerTopRight.width + 'px',
+                height:                     origin.dragBorder.cornerTopRight.height + 'px',
+                'border-top-right-radius':  options.dragWrap.borderRadius
+            });
+            this.__inElement.$dragBorderBottomLeft.css({
+                width:                          origin.dragBorder.cornerBottomLeft.width + 'px',
+                height:                         origin.dragBorder.cornerBottomLeft.height + 'px',
+                'border-bottom-left-radius':    options.dragWrap.borderRadius
+            });
+            this.__inElement.$dragBorderBottomRight.css({
+                width:                          origin.dragBorder.cornerBottomRight.width + 'px',
+                height:                         origin.dragBorder.cornerBottomRight.height + 'px',
+                'border-bottom-right-radius':    options.dragWrap.borderRadius
+            });
+
+            // $dragWrap
+            this.__inElement.$dragWrap.css({
+                left:   origin.dragWrap.left + 'px',
+                top:    origin.dragWrap.top + 'px',
+                width:  origin.dragWrap.width + 'px',
+                height: origin.dragWrap.height + 'px',
+                border: options.dragWrap.borderWidth + ' ' + options.dragWrap.borderStyle + ' ' + options.dragWrap.borderColor,
+                'border-radius':    options.dragWrap.borderRadius,
+                'box-shadow':       options.dragWrap.boxShadow
+            });
+        },
+
+        showStatusInfo: function (options) {
+            if(!options.showStatusBar) return this;
+            // 0. 原始position originPositionInfo
+            // 1. 当前position currentPositionInfo
+            // 2. 当前此次移动的偏移position moveOffsetInfo
+            // 3. 累积移动的偏移position moveOffsetTotalInfo
+            let $dragStatusInfo = $(this.template.dratStatusBar);
+            let dynamic = this.data.dynamic;
+
+            let $moveOffsetInfo = '<span class="info-item move-offset-info"><span class="field">x :</span><span class="value">' + dynamic.moveOffset.offsetX
+                + '<span><span class="field">y :</span><span class="value">' + dynamic.moveOffset.offsetY + '</span></span>';
+            let $moveOffsetTotalInfo = '<span class="info-item move-offset-total-info"><span class="field">x :</span><span class="value">' + dynamic.moveOffsetTotal.offsetX
+                + '<span><span class="field">y :</span><span class="value">' + dynamic.moveOffsetTotal.offsetY + '</span></span>';
+            let windowInfo = '';
+            $dragStatusInfo.append($moveOffsetInfo).append($moveOffsetTotalInfo);
+            this.__inElement.$dragBorderBottom.empty().append($dragStatusInfo);
         },
 
         /**
@@ -686,7 +785,7 @@
             dragBorderTopRight:     '<div class="drag-border drag-border-top-right"></div>',
             dragBorderBottomLeft:   '<div class="drag-border drag-border-bottom-left"></div>',
             dragBorderBottomRight:  '<div class="drag-border drag-border-bottom-right"></div>',
-            dratStatusInfo:         '<div class="drag-status-info"></div>',
+            dratStatusBar:          '<div class="drag-status-bar"></div>'
         }
     };
     /**

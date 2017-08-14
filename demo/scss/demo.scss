@@ -16,6 +16,13 @@ html,body{margin:0;padding:0;box-sizing:border-box}
 html *,body *{box-sizing:inherit;}
 /****************************** 页面样式 ******************************/
 .demo-wrap{padding:40px;}
+.draggable-demo{
+  position:absolute;
+  top: 300px;
+  left: 300px;
+  background-color:rgba(32, 83, 231, 0.35);
+  z-index:2;
+}
 .common-content{
   width: 600px;
   height: 400px;

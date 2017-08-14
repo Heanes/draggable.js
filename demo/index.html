@@ -20,7 +20,7 @@
             </div>
         </div>-->
 
-        <div class="common-content draggable">
+        <div class="common-content draggable-demo">
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
@@ -73,7 +73,47 @@
 <script type="text/javascript" src="../src/js/drag.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.draggable').draggable({
+        $('.draggable-demo').draggable({
+            dragBorder: {
+                topSize:        '60px',
+                bottomSize:     '60px',
+                leftSize:       '60px',
+                rightSize:      '60px',
+                topColor:       '#efdfed',
+                bottomColor:    '#ceb455',
+                leftColor:      '#cdef75',
+                rightColor:     '#a7bbef',
+            },
+            // 显示内容的外套的配置
+            dragContent: {
+                padding:        '18px',
+                bgColor:        '#ddedf1',
+                borderWidth:    '10px',
+                borderColor:    '#a0b3d6',
+                borderStyle:    'solid'
+            },
+            // 拖拽移动框的配置
+            dragMoveBar: {
+                height:           '80px',
+                padding:          '0 10px',
+                bgColor:          '#258cef',
+                color:            '#fff',
+                borderTopWidth:    '20px',
+                borderBottomWidth: '20px',
+                borderLeftWidth:   '20px',
+                borderRightWidth:  '20px',
+                borderStyle:      'solid',
+                borderColor:      '#c9e7e4',
+                fontSize:         '14px'
+            },
+            // 整体样式
+            dragWrap: {
+                borderWidth:    '30px',
+                borderStyle:    'solid',
+                borderColor:    'rgba(248, 233, 104, 0.42)',
+                boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+                borderRadius:   '8px',
+            },
             showStatusBar: true,
             onWindowMove: function () {
                 console.log('sdf');
