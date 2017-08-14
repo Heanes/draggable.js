@@ -6,12 +6,14 @@
  */
 .drag-wrap {
   width: 836px;
-  height: 756px; }
+  height: 756px;
+  top: 62px;
+  left: 182px; }
 
 .drag-wrap {
-  position: relative;
+  position: absolute;
   border: 30px solid rgba(248, 233, 104, 0.42);
-  box-shadow: 2px 2px 4px rgba(130, 130, 130, 0.5);
+  box-shadow: 0px 0px 10px 4px rgba(130, 130, 130, 0.5);
   display: inline-block;
   border-radius: 8px; }
 
@@ -34,7 +36,8 @@
   padding: 0 10px;
   background-color: #258cef;
   color: #fff;
-  cursor: move; }
+  cursor: move;
+  z-index: 2; }
 
 .drag-wrap .drag-operate-wrap .drag-move-bar * {
   margin: 0;
@@ -45,11 +48,12 @@
   position: absolute;
   width: 656px;
   height: 456px;
-  padding: 18px;
-  bottom: 60px;
   left: 60px;
+  bottom: 60px;
+  padding: 18px;
   border: 10px solid #a0b3d6;
-  overflow: auto; }
+  overflow: auto;
+  background-color: #ddedf1; }
 
 /* 当窗体大小变得太小时，原始内容应出现滚动条 */
 /*.drag-wrap .drag-content > *{overflow:auto;}*/
@@ -147,5 +151,15 @@
     background-color: #89ef5a; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
     background-color: #ef7f44; }
+
+.drag-wrap .drag-status-info {
+  color: #fff;
+  font-size: 12px; }
+
+.drag-wrap .drag-status-info .info-item {
+  margin-right: 10px; }
+
+.drag-wrap .drag-status-info .info-item .field {
+  margin: 0 4px; }
 
 /*# sourceMappingURL=drag.css.map */

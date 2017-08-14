@@ -20,13 +20,29 @@
             </div>
         </div>-->
 
-        <div class="something-content-demo1">
+        <div class="common-content draggable">
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
         </div>
+
+        <div class="common-content something-content-demo">
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+        </div>
+
+        <!--<div class="something-content-center-demo">
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+        </div>-->
         <!--<div class="drag-wrap">
             <div class="drag-operate-wrap">
                 <div class="drag-move-bar">
@@ -57,7 +73,12 @@
 <script type="text/javascript" src="../src/js/drag.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.something-content-demo1').draggable();
+        $('.draggable').draggable({
+            showStatusBar: true,
+            onWindowMove: function () {
+                console.log('sdf');
+            }
+        });
     });
 </script>
 </body>

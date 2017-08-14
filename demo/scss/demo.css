@@ -24,16 +24,17 @@ html *, body * {
 .demo-wrap {
   padding: 40px; }
 
-/* 拖拽区域 */
-.something-content-demo-wrap {
+.common-content {
+  width: 600px;
+  height: 400px;
+  padding: 10px;
+  font-size: 18px; }
+
+.something-content-demo {
   position: absolute;
-  width: 50%;
-  height: 50%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; }
+  top: 300px;
+  left: 300px;
+  background-color: rgba(201, 231, 228, 0.35); }
 
 .content-wrap {
   text-align: center;
@@ -41,7 +42,7 @@ html *, body * {
   width: 400px;
   height: 400px; }
 
-.something-content-demo {
+.something-content-center-demo {
   position: absolute;
   top: 50%;
   bottom: 50%;

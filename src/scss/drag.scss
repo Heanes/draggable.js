@@ -11,6 +11,7 @@ $dragContentPadding: 18px;
 $dragContentBorderWidth: 10px;
 $dragContentBorderColor: #a0b3d6;
 $dragContentBorderStyle: solid;
+$dragContentBgColor: #ddedf1;
 
 // 窗体拖拽移动操作区域
 // [配置项]，拖拽操作区域高度、背景颜色，前景颜色，边框样式，字体属性等
@@ -42,32 +43,53 @@ $dragWrapBorderSize: 30px;
 $dragWrapBorderStyle: solid;
 $dragWrapBorderColor: rgba(248, 233, 104, 0.42);
 // [配置项]，【拖拽的窗体内容区域的边框样式】
-$dragWrapBoxShadow: 2px 2px 4px rgba(130, 130, 130, .5);
+$dragWrapBoxShadow: 0px 0px 10px 4px rgba(130, 130, 130, .5);
 
-// [计算项]原始内容窗体的宽高
+// [计算项] 1.【原始内容窗体的宽高】
 $originContentWidth: 600px;
 $originContentHeight: 400px;
+$originContentTop: 300px;
+$originContentLeft: 300px;
 // 窗体展示内容区域样式
-// [计算项]【拖拽的窗体内容区域的宽高】
+// [计算项] 2.【拖拽的窗体内容区域的宽高】
 $dragContentWidth: $originContentWidth + $dragContentPadding * 2 + $dragContentBorderWidth * 2;
 $dragContentHeight: $originContentHeight + $dragContentPadding * 2 + $dragContentBorderWidth * 2;
 
 // 窗体拖拽移动操作区域
-// [计算项]【窗体拖拽移动操作区域的宽高】
+// [计算项] 3.【窗体拖拽移动操作区域的宽高】
 $dragMoveBarWidth: $dragContentWidth;
 $dragMoveBarHeight: $dragMoveBarHeight + $dragMoveBarBorderTopSize + $dragMoveBarBorderBottomSize;
 
-// [计算项]【整个窗体的宽高】
-$dragWrapWidth: $dragContentWidth + ($dragBorderLeftSize + $dragBorderRightSize) + ($dragWrapBorderSize + $dragWrapBorderSize);
-$dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSize) + $dragMoveBarHeight + ($dragWrapBorderSize + $dragWrapBorderSize);
+// [计算项] 4.【拖拽改变大小的水平边框的宽度、竖直边框的高度】
+$dragBorderHorizontalWidth: $dragContentWidth - $dragContentBorderWidth * 2;
+$dragBorderVerticalHeight: $dragContentHeight + $dragMoveBarHeight - $dragContentBorderWidth * 2;;
+
+// [计算项] 5.【拖拽改变大小的四角的宽高(正方形)】
+$dragBorderCornerTopLeftWidth: $dragBorderLeftSize + ($dragContentBorderWidth * 1);
+$dragBorderCornerTopLeftHeight: $dragBorderTopSize + ($dragContentBorderWidth * 1);
+
+$dragBorderCornerTopRightWidth: $dragBorderRightSize + ($dragContentBorderWidth * 1);
+$dragBorderCornerTopRightHeight: $dragBorderTopSize + ($dragContentBorderWidth * 1);
+
+$dragBorderCornerBottomLeftWidth: $dragBorderLeftSize + ($dragContentBorderWidth * 1);
+$dragBorderCornerBottomLeftHeight: $dragBorderBottomSize + ($dragContentBorderWidth * 1);
+
+$dragBorderCornerBottomRightWidth: $dragBorderRightSize + ($dragContentBorderWidth * 1);
+$dragBorderCornerBottomRightHeight: $dragBorderBottomSize + ($dragContentBorderWidth * 1);
+
+// [计算项] 6.【整个窗体的宽高】
+$dragWrapWidth: $dragContentWidth + ($dragBorderLeftSize + $dragBorderRightSize) + ($dragWrapBorderSize * 2);
+$dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSize) + $dragMoveBarHeight + ($dragWrapBorderSize * 2);
 
 .drag-wrap {
   width: $dragWrapWidth;
   height: $dragWrapHeight;
+  top: $originContentTop - ($dragContentPadding + $dragContentBorderWidth + $dragBorderTopSize + $dragWrapBorderSize + $dragMoveBarHeight);
+  left: $originContentLeft - ($dragContentPadding + $dragContentBorderWidth + $dragBorderLeftSize + $dragWrapBorderSize);
 }
 
 .drag-wrap {
-  position: relative;
+  position: absolute;
   border: $dragWrapBorderSize $dragWrapBorderStyle $dragWrapBorderColor;
   box-shadow: $dragWrapBoxShadow;
   display: inline-block;
@@ -94,6 +116,7 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
   background-color: $dragMoveBarBgColor;
   color: $dragMoveBarColor;
   cursor: move;
+  z-index: 2;
 }
 
 .drag-wrap .drag-operate-wrap .drag-move-bar *{
@@ -106,32 +129,16 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
   position: absolute;
   width: $dragContentWidth;
   height: $dragContentHeight;
-  padding: $dragContentPadding;
-  bottom: $dragBorderBottomSize;
   left: $dragBorderLeftSize;
+  bottom: $dragBorderBottomSize;
+  padding: $dragContentPadding;
   border: $dragContentBorderWidth $dragWrapBorderStyle $dragContentBorderColor;
   overflow: auto;
+  background-color: $dragContentBgColor;
 }
 
 /* 当窗体大小变得太小时，原始内容应出现滚动条 */
 /*.drag-wrap .drag-content > *{overflow:auto;}*/
-
-// [计算项]【拖拽改变大小的水平边框的宽度、竖直边框的高度】
-$dragBorderHorizontalWidth: $dragContentWidth - $dragContentBorderWidth * 2;
-$dragBorderVerticalHeight: $dragContentHeight + $dragMoveBarHeight - $dragContentBorderWidth * 2;;
-
-// [计算项]【拖拽改变大小的四角的宽高(正方形)】
-$dragBorderCornerTopLeftWidth: $dragBorderLeftSize + ($dragContentBorderWidth * 1);
-$dragBorderCornerTopLeftHeight: $dragBorderTopSize + ($dragContentBorderWidth * 1);
-
-$dragBorderCornerTopRightWidth: $dragBorderRightSize + ($dragContentBorderWidth * 1);
-$dragBorderCornerTopRightHeight: $dragBorderTopSize + ($dragContentBorderWidth * 1);
-
-$dragBorderCornerBottomLeftWidth: $dragBorderLeftSize + ($dragContentBorderWidth * 1);
-$dragBorderCornerBottomLeftHeight: $dragBorderBottomSize + ($dragContentBorderWidth * 1);
-
-$dragBorderCornerBottomRightWidth: $dragBorderRightSize + ($dragContentBorderWidth * 1);
-$dragBorderCornerBottomRightHeight: $dragBorderBottomSize + ($dragContentBorderWidth * 1);
 
 .drag-wrap .drag-operate-wrap .drag-border {
   background-color: $dragBorderBgColor;
@@ -163,8 +170,8 @@ $dragBorderCornerBottomRightHeight: $dragBorderBottomSize + ($dragContentBorderW
   &.drag-border-bottom {
     left: $dragBorderCornerBottomLeftWidth;
     width: $dragBorderHorizontalWidth;
-    height: $dragBorderTopSize;
-    line-height: $dragBorderTopSize;
+    height: $dragBorderBottomSize;
+    line-height: $dragBorderBottomSize;
     padding: 0 10px;
     cursor: ns-resize;
   }
@@ -304,4 +311,16 @@ $dragBorderCornerBottomRightHeight: $dragBorderBottomSize + ($dragContentBorderW
   &.drag-border-bottom-right {
     background-color:#ef7f44;
   }
+}
+
+.drag-wrap .drag-status-info{
+  color: #fff;
+  font-size: 12px;
+}
+.drag-wrap .drag-status-info .info-item{
+  margin-right:10px;
+}
+
+.drag-wrap .drag-status-info .info-item .field{
+  margin: 0 4px;
 }
