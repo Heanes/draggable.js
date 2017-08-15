@@ -148,7 +148,7 @@ $dragWrapHeight: $dragContentHeight + ($dragBorderTopSize + $dragBorderBottomSiz
 /*.drag-wrap .drag-content > *{overflow:auto;}*/
 
 .drag-wrap .drag-operate-wrap .drag-border {
-  background-color: $dragBorderBgColor;
+  /*background-color: $dragBorderBgColor;*/
   &.drag-border-top,
   &.drag-border-bottom,
   &.drag-border-right,

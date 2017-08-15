@@ -65,7 +65,7 @@
 /* 当窗体大小变得太小时，原始内容应出现滚动条 */
 /*.drag-wrap .drag-content > *{overflow:auto;}*/
 .drag-wrap .drag-operate-wrap .drag-border {
-  background-color: rgba(240, 243, 249, 0.44); }
+  /*background-color: $dragBorderBgColor;*/ }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
     position: absolute;
     z-index: 2; }

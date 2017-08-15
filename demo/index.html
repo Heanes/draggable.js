@@ -20,7 +20,15 @@
             </div>
         </div>-->
 
-        <div class="common-content draggable-demo">
+        <div class="common-content draggable-demo-dev">
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+            <p>This is test text just hold the place. This is long paragraph.</p>
+        </div>
+
+        <div class="common-content draggable-demo-normal">
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
@@ -73,17 +81,7 @@
 <script type="text/javascript" src="../src/js/drag.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.draggable-demo').draggable({
-            dragBorder: {
-                topSize:        '60px',
-                bottomSize:     '60px',
-                leftSize:       '60px',
-                rightSize:      '60px',
-                topColor:       '#efdfed',
-                bottomColor:    '#ceb455',
-                leftColor:      '#cdef75',
-                rightColor:     '#a7bbef',
-            },
+        let optionDev = {
             // 显示内容的外套的配置
             dragContent: {
                 padding:        '18px',
@@ -106,6 +104,17 @@
                 borderColor:      '#c9e7e4',
                 fontSize:         '14px'
             },
+            // resize边框的配置
+            dragBorder: {
+                topSize:        '60px',
+                bottomSize:     '60px',
+                leftSize:       '60px',
+                rightSize:      '60px',
+                topColor:       '#efdfed',
+                bottomColor:    '#ceb455',
+                leftColor:      '#cdef75',
+                rightColor:     '#a7bbef',
+            },
             // 整体样式
             dragWrap: {
                 borderWidth:    '30px',
@@ -114,11 +123,61 @@
                 boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
                 borderRadius:   '8px',
             },
-            showStatusBar: true,
             onWindowMove: function () {
-                console.log('sdf');
+                console.log('You had move the target window');
             }
-        });
+        };
+
+        let optionNormal = {
+            // 显示内容的外套的配置
+            dragContent: {
+                padding:        '10px',
+                bgColor:        '#ddedf1',
+                borderWidth:    '10px',
+                borderColor:    '#a0b3d6',
+                borderStyle:    'solid'
+            },
+            // 拖拽移动框的配置
+            dragMoveBar: {
+                height:           '60px',
+                padding:          '0 10px',
+                bgColor:          '#258cef',
+                color:            '#fff',
+                borderTopWidth:    '10px',
+                borderBottomWidth: '10px',
+                borderLeftWidth:   '10px',
+                borderRightWidth:  '10px',
+                borderStyle:      'solid',
+                borderColor:      '#c9e7e4',
+                fontSize:         '14px'
+            },
+            // resize边框的配置
+            dragBorder: {
+                topSize:        '10px',
+                bottomSize:     '10px',
+                leftSize:       '10px',
+                rightSize:      '10px',
+                topColor:       '#efdfed',
+                bottomColor:    '#ceb455',
+                leftColor:      '#cdef75',
+                rightColor:     '#a7bbef',
+            },
+            // 整体样式
+            dragWrap: {
+                borderWidth:    '0',
+                borderStyle:    'solid',
+                borderColor:    'rgba(248, 233, 104, 0.42)',
+                boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+                borderRadius:   '8px',
+            },
+            onWindowMove: function () {
+                console.log('You had move the target window');
+            },
+            showStatusBar: false,                                // 是否显示状态信息栏
+        };
+
+        //$('.draggable-demo-dev').draggable(optionDev);
+        $('.draggable-demo-normal').draggable(optionNormal);
     });
 </script>
 </body>
