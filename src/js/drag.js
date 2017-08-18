@@ -276,7 +276,6 @@
 
             });
 
-
             this.bindDrag(options);
             this.bindResize(options);
             return this;
@@ -370,23 +369,25 @@
          * @returns {Draggable}
          */
         bindDirectionKeyToMove: function (options) {
-            if(!options.enableDirectionKeyToMove || options.directionKeyDownToMoveOffset) return this;
+            if(!options.enableDirectionKeyToMove || options.directionKeyDownToMoveOffset <= 0) return this;
             // 按键触发拖拽移动
             let that = this, dynamic = this.data.dynamic;
-            this.__inElement.$dragMoveBar.on('keydown', function(event){
+            $(document).on('keydown', function(event){
                 let e = event ? event: window.event;
                 // 按上下左右方向键触发拖拽
                 // 上
                 if(e.keyCode === 38){
                     //alert('你按下了上');
                     dynamic.dragFlag = true;
-                    dynamic.moveOffset.offsetY -= options.keyDownToMoveOffset;
+                    dynamic.moveOffset.offsetY = -options.directionKeyDownToMoveOffset;
+                    dynamic.moveOffset.offsetX = 0;
                     that.mouseMoveToDrag(options);
                 }
                 // 下
                 if(e.keyCode === 40){
                     //alert('你按下了下');
-                    dynamic.moveOffset.offsetY += options.keyDownToMoveOffset;
+                    dynamic.moveOffset.offsetY = options.directionKeyDownToMoveOffset;
+                    dynamic.moveOffset.offsetX = 0;
                     dynamic.dragFlag = true;
                     that.mouseMoveToDrag(options);
                 }
@@ -394,16 +395,21 @@
                 if(e.keyCode === 37){
                     //alert('你按下了左');
                     dynamic.dragFlag = true;
-                    dynamic.moveOffset.offsetX -= options.keyDownToMoveOffset;
+                    dynamic.moveOffset.offsetX = -options.directionKeyDownToMoveOffset;
+                    dynamic.moveOffset.offsetY = 0;
                     that.mouseMoveToDrag(options);
                 }
                 // 右
                 if(e.keyCode === 39){
                     //alert('你按下了右');
                     dynamic.dragFlag = true;
-                    dynamic.moveOffset.offsetX += options.keyDownToMoveOffset;
+                    dynamic.moveOffset.offsetX = options.directionKeyDownToMoveOffset;
+                    dynamic.moveOffset.offsetY = 0;
                     that.mouseMoveToDrag(options);
                 }
+                let targetPosition = getTargetPosition(that.__inElement.$dragWrap);
+                dynamic.currentPosition.left = targetPosition.left;
+                dynamic.currentPosition.top = targetPosition.top;
             });
 
             $(document).on('keyup', function(event){

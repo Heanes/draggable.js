@@ -81,7 +81,10 @@
 <script type="text/javascript" src="../src/js/drag.js"></script>
 <script type="text/javascript">
     $(function () {
+
         let optionDev = {
+            enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
+            directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
             // 显示内容的外套的配置
             dragContent: {
                 padding:        '18px',
@@ -129,6 +132,9 @@
         };
 
         let optionNormal = {
+            enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
+            directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
+            title: '<h2 class="content-title">标题</h2>', // 拖拽窗体的标题
             // 显示内容的外套的配置
             dragContent: {
                 padding:        '10px',
@@ -176,7 +182,7 @@
             showStatusBar: false,                                // 是否显示状态信息栏
         };
 
-        //$('.draggable-demo-dev').draggable(optionDev);
+        $('.draggable-demo-dev').draggable(optionDev);
         $('.draggable-demo-normal').draggable(optionNormal);
     });
 </script>
