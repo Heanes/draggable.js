@@ -83,6 +83,7 @@
     $(function () {
 
         let optionDev = {
+            dragDirection: 'x',                               // 可以拖动的方向，x|y|all
             enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
             directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
             // 显示内容的外套的配置
@@ -183,7 +184,9 @@
         };
 
         $('.draggable-demo-dev').draggable(optionDev);
-        $('.draggable-demo-normal').draggable(optionNormal);
+        setTimeout(function () {
+            $('.draggable-demo-normal').draggable(optionNormal);
+        }, 3000)
     });
 </script>
 </body>

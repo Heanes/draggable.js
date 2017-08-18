@@ -15,15 +15,28 @@
 ;(function($, window, document, undefined){
     "use strict";
     let pluginName = 'draggable';
+    
     let _default = {};
     _default.setting = {
-        draggable: true,                                    // 是否可以拖拽移动
-        resizable: true,                                    // 是否可以拖拽调整窗体大小
         title: '<h2 class="content-title">拖拽一下试试</h2>', // 拖拽窗体的标题
         showStatusBar: true,                                // 是否显示状态信息栏
+
         wrapType: 1,                                        // 添加窗体外套的方式， 1-从原始内容扩展，原始内容缩小；2-原始内容不动，向外扩展
+
+        draggable: true,                                    // 是否可以拖拽移动
+        dragDirection: 'all',                               // 可以拖动的方向，x|y|all
+        dragLimitTop: 0,                                    // 拖拽限制顶部范围
+        dragLimitLeft: 0,                                   // 拖拽限制左侧范围
+        dragLimitBottom: 0,                                 // 拖拽限制底部范围
+
+        dragLimitRight: 0,                                  // 拖拽限制右侧范围
+        resizable: true,                                    // 是否可以拖拽调整窗体大小
         enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
         directionKeyDownToMoveOffset: 1,                    // 按一次方向键移动窗体时的偏移量
+        resizeMinWidth: 150,                                // 调整大小后的最小宽度
+        resizeMinHeight: 150,                               // 调整大小后的最小高度
+        resizeMaxWidth: 500,                                // 调整大小后的最大高度
+        resizeMaxHeight: 500,                               // 调整大小后的最大高度
         // 显示内容的外套的配置
         dragContent: {
             padding:        '18px',
@@ -243,9 +256,9 @@
          * @returns {Draggable}
          */
         bindMouseEvent: function (options) {
-            let that = this, dynamic = this.data.dynamic;
+            let _this = this, dynamic = this.data.dynamic;
             // 全局 - 鼠标移动
-            $(document).on('mousemove', function (event) {
+            this.__inElement.$dragWrap.on('mousemove', function (event) {
                 let e = event ? event: window.event;
 
                 if(options.draggable || options.resizable){
@@ -254,19 +267,19 @@
                         dynamic.moveOffset.offsetY = e.clientY - dynamic.mouseDownPosition.Y;
                     }
 
-                    //console.log(that.__inElement.moveOffset);
+                    //console.log(_this.__inElement.moveOffset);
 
                     // 拖拽窗体部分
-                    that.mouseMoveToDrag(options);
+                    _this.mouseMoveToDrag(options);
 
                     // 改变窗体大小部分
-                    that.mouseMoveToResize(options);
+                    _this.mouseMoveToResize(options);
 
                 }
             });
 
             // 全局 - 释放鼠标
-            $(document).on('mouseup', function () {
+            this.__inElement.$dragWrap.on('mouseup', function () {
                 if(options.draggable && dynamic.dragFlag){
                     dynamic.dragFlag = false;
                 }
@@ -291,15 +304,15 @@
             dynamic.moveOffsetTotal.offsetX = calculated.dragWrap.left - origin.dragWrap.left;
             dynamic.moveOffsetTotal.offsetY = calculated.dragWrap.top - origin.dragWrap.top;
         },
-        
+
         /**
          * @doc 窗体移动时的事件
          * @param options
          */
         bindWindowMoveEvent: function (options) {
-            let that = this;
+            let _this = this;
             this.__inElement.$dragWrap.on('move', function(event){
-                that.calculateMoveOffset(options);
+                _this.calculateMoveOffset(options);
             });
             // 用户定义的窗体移动事件
             if(typeof options.onWindowMove === 'function'){
@@ -315,16 +328,16 @@
             if(!options.draggable){
                 return this;
             }
-            let that = this, dynamic = this.data.dynamic;
+            let _this = this, dynamic = this.data.dynamic;
             // 标题栏按下鼠标时，拖拽
-            that.__inElement.$dragMoveBar.on('mousedown', function (event) {
+            _this.__inElement.$dragMoveBar.on('mousedown', function (event) {
                 dynamic.dragFlag = true;
 
                 let e = event ? event: window.event;
 
                 dynamic.mouseDownPosition.X = e.clientX;
                 dynamic.mouseDownPosition.Y = e.clientY;
-                let targetPosition = getTargetPosition(that.__inElement.$dragWrap);
+                let targetPosition = getTargetPosition(_this.__inElement.$dragWrap);
                 dynamic.currentPosition.left = targetPosition.left;
                 dynamic.currentPosition.top = targetPosition.top;
             });
@@ -341,6 +354,13 @@
             let dynamic = this.data.dynamic, calculated = this.data.calculated;
             if(options.draggable && dynamic.dragFlag){
                 preventTextSelectable(this.__inElement.$dragWrap);
+                // 可以拖动的方向
+                if(this.options.dragDirection.toLowerCase() === 'y'){
+                    dynamic.moveOffset.offsetY = 0;
+                }
+                if(this.options.dragDirection.toLowerCase() === 'x'){
+                    dynamic.moveOffset.offsetX = 0;
+                }
                 let nowPosition = {
                         top: dynamic.currentPosition.top + dynamic.moveOffset.offsetY,
                         left: dynamic.currentPosition.left + dynamic.moveOffset.offsetX
@@ -371,7 +391,7 @@
         bindDirectionKeyToMove: function (options) {
             if(!options.enableDirectionKeyToMove || options.directionKeyDownToMoveOffset <= 0) return this;
             // 按键触发拖拽移动
-            let that = this, dynamic = this.data.dynamic;
+            let _this = this, dynamic = this.data.dynamic;
             $(document).on('keydown', function(event){
                 let e = event ? event: window.event;
                 // 按上下左右方向键触发拖拽
@@ -381,7 +401,7 @@
                     dynamic.dragFlag = true;
                     dynamic.moveOffset.offsetY = -options.directionKeyDownToMoveOffset;
                     dynamic.moveOffset.offsetX = 0;
-                    that.mouseMoveToDrag(options);
+                    _this.mouseMoveToDrag(options);
                 }
                 // 下
                 if(e.keyCode === 40){
@@ -389,7 +409,7 @@
                     dynamic.moveOffset.offsetY = options.directionKeyDownToMoveOffset;
                     dynamic.moveOffset.offsetX = 0;
                     dynamic.dragFlag = true;
-                    that.mouseMoveToDrag(options);
+                    _this.mouseMoveToDrag(options);
                 }
                 // 左
                 if(e.keyCode === 37){
@@ -397,7 +417,7 @@
                     dynamic.dragFlag = true;
                     dynamic.moveOffset.offsetX = -options.directionKeyDownToMoveOffset;
                     dynamic.moveOffset.offsetY = 0;
-                    that.mouseMoveToDrag(options);
+                    _this.mouseMoveToDrag(options);
                 }
                 // 右
                 if(e.keyCode === 39){
@@ -405,9 +425,9 @@
                     dynamic.dragFlag = true;
                     dynamic.moveOffset.offsetX = options.directionKeyDownToMoveOffset;
                     dynamic.moveOffset.offsetY = 0;
-                    that.mouseMoveToDrag(options);
+                    _this.mouseMoveToDrag(options);
                 }
-                let targetPosition = getTargetPosition(that.__inElement.$dragWrap);
+                let targetPosition = getTargetPosition(_this.__inElement.$dragWrap);
                 dynamic.currentPosition.left = targetPosition.left;
                 dynamic.currentPosition.top = targetPosition.top;
             });
@@ -431,9 +451,9 @@
             if(!options.draggable){
                 return this;
             }
-            let that = this, dynamic = this.data.dynamic, calculated = this.data.calculated;
+            let _this = this, dynamic = this.data.dynamic, calculated = this.data.calculated;
             // 边框部分按下鼠标时，改变窗体大小
-            that.__inElement.$dragBorder.on('mousedown', function (event) {
+            _this.__inElement.$dragBorder.on('mousedown', function (event) {
                 dynamic.resizeFlag = true;
 
                 let e = event ? event: window.event;
@@ -468,16 +488,16 @@
 
                 dynamic.mouseDownPosition.X = e.clientX;
                 dynamic.mouseDownPosition.Y = e.clientY;
-                let targetPosition = getTargetPosition(that.__inElement.$dragWrap);
+                let targetPosition = getTargetPosition(_this.__inElement.$dragWrap);
                 dynamic.currentPosition.left = targetPosition.left;
                 dynamic.currentPosition.top = targetPosition.top;
 
-                let dragWrapWindowOuterSize     = getTargetWindowOuterSize(that.__inElement.$dragWrap);
-                let dragContentWindowOuterSize  = getTargetWindowOuterSize(that.__inElement.$dragContent);
-                let contentWindowOuterSize      = getTargetWindowOuterSize(that.__inElement.$originContent);
-                let dragMoveBarWindowOuterSize  = getTargetWindowOuterSize(that.__inElement.$dragMoveBar);
-                let dragBorderTopOuterSize      = getTargetWindowOuterSize(that.__inElement.$dragBorderTop);
-                let dragBorderLeftOuterSize     = getTargetWindowOuterSize(that.__inElement.$dragBorderLeft);
+                let dragWrapWindowOuterSize     = getTargetWindowOuterSize(_this.__inElement.$dragWrap);
+                let dragContentWindowOuterSize  = getTargetWindowOuterSize(_this.__inElement.$dragContent);
+                let contentWindowOuterSize      = getTargetWindowOuterSize(_this.__inElement.$originContent);
+                let dragMoveBarWindowOuterSize  = getTargetWindowOuterSize(_this.__inElement.$dragMoveBar);
+                let dragBorderTopOuterSize      = getTargetWindowOuterSize(_this.__inElement.$dragBorderTop);
+                let dragBorderLeftOuterSize     = getTargetWindowOuterSize(_this.__inElement.$dragBorderLeft);
                 // 拖拽整体
                 calculated.dragWrap.width = dragWrapWindowOuterSize.outerWidth;
                 calculated.dragWrap.height = dragWrapWindowOuterSize.outerHeight;
@@ -492,7 +512,7 @@
                 calculated.dragBorder.verticalHeight = dragBorderLeftOuterSize.outerHeight;
                 calculated.dragBorder.horizontalWidth = dragBorderTopOuterSize.outerWidth;
             });
-            return that;
+            return _this;
         },
 
         /**
@@ -501,9 +521,9 @@
          * @returns {Draggable}
          */
         mouseMoveToResize: function (options) {
-            let that = this, dynamic = this.data.dynamic, calculated = this.data.calculated;
+            let _this = this, dynamic = this.data.dynamic, calculated = this.data.calculated;
             if(options.resizable && dynamic.resizeFlag){
-                preventTextSelectable(that.__inElement.$dragWrap);
+                preventTextSelectable(_this.__inElement.$dragWrap);
                 let nowPosition = {};
                 /*console.log('moveOffset： ');
                 console.log(moveOffset);
@@ -554,18 +574,18 @@
 
                 // 更改窗体位置
                 if(dynamic.resizeBorderPlace === 'top' || dynamic.resizeBorderPlace === 'left' || dynamic.resizeBorderPlace === 'top-left' || dynamic.resizeBorderPlace === 'top-right' || dynamic.resizeBorderPlace === 'bottom-left'){
-                    moveTargetPosition(that.__inElement.$dragWrap, nowPosition);
+                    moveTargetPosition(_this.__inElement.$dragWrap, nowPosition);
                 }
 
                 // 改变窗体大小
-                changeTargetWindowSize(that.__inElement.$dragWrap, dragWrapNowSize);
-                changeTargetWindowSize(that.__inElement.$dragContent, dragContentNowSize);
-                changeTargetWindowSize(that.__inElement.$originContent, contentNowSize);
-                changeTargetWindowSize(that.__inElement.$dragMoveBar, dragMoveBarNowSize);
-                changeTargetWindowSize(that.__inElement.$dragBorderTop, dragBorderHorizontalNowSize);
-                changeTargetWindowSize(that.__inElement.$dragBorderBottom, dragBorderHorizontalNowSize);
-                changeTargetWindowSize(that.__inElement.$dragBorderLeft, dragBorderVerticalNowSize);
-                changeTargetWindowSize(that.__inElement.$dragBorderRight, dragBorderVerticalNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragWrap, dragWrapNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragContent, dragContentNowSize);
+                changeTargetWindowSize(_this.__inElement.$originContent, contentNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragMoveBar, dragMoveBarNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragBorderTop, dragBorderHorizontalNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragBorderBottom, dragBorderHorizontalNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragBorderLeft, dragBorderVerticalNowSize);
+                changeTargetWindowSize(_this.__inElement.$dragBorderRight, dragBorderVerticalNowSize);
 
                 this.showStatusInfo(options);
 
@@ -592,9 +612,9 @@
 
             this.bindWindowMoveEvent(options);
 
-            this.bindKeyEvent(options);
+            //this.bindKeyEvent(options);
 
-            return this;
+            //return this;
         },
 
         /**
@@ -699,7 +719,7 @@
             let $dragContentNew = this.$element.parent();
             $dragContentNew.wrap($dragWrap);
 
-            let $dragWrapNew = $dragContentNew.parent();
+            let $dragWrapNew = $dragContentNew.parent().attr('id', this.$element.attr('class'));
             $dragWrapNew.prepend($dragOperateWrap);
 
             this.__inElement.$originContent         = this.$element;
@@ -716,6 +736,8 @@
             this.__inElement.$dragBorderTopRight    = $dragBorderTopRight;
             this.__inElement.$dragBorderBottomLeft  = $dragBorderBottomLeft;
             this.__inElement.$dragBorderBottomRight = $dragBorderBottomRight;
+            return this;
+
         },
 
         /**
@@ -952,7 +974,7 @@
      * @doc 阻止可选中文本
      */
     function preventTextSelectable($dom) {
-        $dom.on('selectstart', function(){ return false; });
+        $dom.on('selectstart', function(e){ e.stopPropagation();});
     }
 
     /**
