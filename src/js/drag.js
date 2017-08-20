@@ -615,9 +615,9 @@
 
         this.bindWindowMoveEvent(options);
 
-        //this.bindKeyEvent(options);
+        this.bindKeyEvent(options);
 
-        //return this;
+        return this;
     };
 
     /**
