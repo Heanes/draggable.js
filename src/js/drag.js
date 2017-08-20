@@ -708,11 +708,11 @@
             $dragBorderBottomRight = $(this.template.dragBorderBottomRight);
 
         $dragOperateWrap.append($dragMoveBar)
-        // 上边及上边两个角
+            // 上边及上边两个角
             .append($dragBorderTopLeft).append($dragBorderTop).append($dragBorderTopRight)
-        // 侧边
+            // 侧边
             .append($dragBorderLeft).append($dragBorderRight)
-        // 下边及下边两个角
+            // 下边及下边两个角
             .append($dragBorderBottomLeft).append($dragBorderBottom).append($dragBorderBottomRight);
 
         let $dragContent = $(this.template.dragContent);
@@ -722,7 +722,7 @@
         let $dragContentNew = this.$element.parent();
         $dragContentNew.wrap($dragWrap);
 
-        let $dragWrapNew = $dragContentNew.parent().attr('id', this.$element.attr('class'));
+        let $dragWrapNew = $dragContentNew.parent();
         $dragWrapNew.prepend($dragOperateWrap);
 
         this.__inElement.$originContent         = this.$element;
