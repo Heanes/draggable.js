@@ -83,6 +83,7 @@
     $(function () {
 
         let optionDev = {
+            testX: 'devTestX',
             dragDirection: 'all',                               // 可以拖动的方向，x|y|all
             enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
             directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
@@ -128,11 +129,12 @@
                 borderRadius:   '8px',
             },
             onWindowMove: function () {
-                console.log('You had move the target window');
+                console.log('You had move the target dev window');
             }
         };
 
         let optionNormal = {
+            testX: 'normalTestX',
             enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
             directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
             title: '<h2 class="content-title">标题</h2>', // 拖拽窗体的标题
@@ -178,14 +180,14 @@
                 borderRadius:   '8px',
             },
             onWindowMove: function () {
-                console.log('You had move the target window');
+                console.log('You had move the target normal window');
             },
-            showStatusBar: false,                                // 是否显示状态信息栏
+            showStatusBar: true,                                // 是否显示状态信息栏
         };
 
-        $('.draggable-demo-dev').draggable(optionDev);
+        $('.draggable-demo-dev').draggableView(optionDev);
         setTimeout(function () {
-            $('.draggable-demo-normal').draggable(optionNormal);
+            $('.draggable-demo-normal').draggableView(optionNormal);
         }, 3000)
     });
 </script>
