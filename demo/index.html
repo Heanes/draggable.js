@@ -7,9 +7,10 @@
     <meta name="author" content="Heanes heanes.com email(heanes@163.com)">
     <meta name="keywords" content="软件,商务,HTML,tutorials,source codes">
     <meta name="description" content="描述">
+    <link rel="stylesheet" href="//ui.heanes.com/dist/css/heanesUI.css"/>
     <link rel="stylesheet" href="../src/scss/drag.css"/>
     <link rel="stylesheet" href="scss/demo.css"/>
-    <title>draggable.js Demo</title>
+    <title>draggableView.js Demo</title>
 </head>
 <body>
 <div class="wrap">
@@ -28,12 +29,44 @@
             <p>This is test text just hold the place. This is long paragraph.</p>
         </div>
 
-        <div class="common-content draggable-demo-normal">
+        <!--<div class="common-content draggable-demo-normal">
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
             <p>This is test text just hold the place. This is long paragraph.</p>
+        </div>-->
+        <div class="demo-config">
+            <form class="demo-config-form" name="demo-config-form">
+                <div class="form-group">
+                    <label class="config-label">可以拖动</label>
+                    <select name="enableDrag">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="config-label">可以改变大小</label>
+                    <select name="enableResize">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="config-label">窗体标题</label>
+                    <input class="form-control" name="draggableViewTitle" value="拖拽一下试试"/>
+                </div>
+                <div class="form-group">
+                    <label class="config-label">是否显示状态栏</label>
+                    <select name="showStatusInfo">
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
+                </div>
+                <div class="form-handle">
+                    <button class="btn btn-primary demo-config-conirm-btn">确认</button>
+                </div>
+            </form>
         </div>
 
         <!--<div class="common-content something-content-demo">
@@ -78,9 +111,25 @@
     </div>
 </div>
 <script type="text/javascript" src="../resource/js/jquery.2.2.4.min.js"></script>
-<script type="text/javascript" src="../src/js/drag.js"></script>
+<script type="text/javascript" src="../src/js/draggableView.js"></script>
 <script type="text/javascript">
     $(function () {
+
+        $.fn.serializeObject = function() {
+            let o = {};
+            let a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
 
         let optionDev = {
             testX: 'devTestX',
@@ -88,7 +137,7 @@
             enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
             directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
             // 显示内容的外套的配置
-            dragContent: {
+            dragContentWrap: {
                 padding:        '18px',
                 bgColor:        '#ddedf1',
                 borderWidth:    '10px',
@@ -129,17 +178,20 @@
                 borderRadius:   '8px',
             },
             onWindowMove: function () {
-                console.log('You had move the target dev window');
+                // console.log('You had move the target dev window');
             }
         };
 
-        let optionNormal = {
-            testX: 'normalTestX',
+        let $demoConfigForm = $('.demo-config-form'),
+            $demoConfigConfirmBtn = $('.demo-config-conirm-btn'),
+            $draggableDemoDev = $('.draggable-demo-dev');
+
+        let optionConifg = {
             enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
             directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
             title: '<h2 class="content-title">标题</h2>', // 拖拽窗体的标题
             // 显示内容的外套的配置
-            dragContent: {
+            dragContentWrap: {
                 padding:        '10px',
                 bgColor:        '#ddedf1',
                 borderWidth:    '10px',
@@ -180,15 +232,25 @@
                 borderRadius:   '8px',
             },
             onWindowMove: function () {
-                console.log('You had move the target normal window');
+                // console.log('You had move the target normal window');
             },
             showStatusBar: true,                                // 是否显示状态信息栏
         };
 
-        $('.draggable-demo-dev').draggableView(optionDev);
-        setTimeout(function () {
-            $('.draggable-demo-normal').draggableView(optionNormal);
-        }, 3000)
+        $demoConfigConfirmBtn.on('click', function(){
+            let formDataObj = $demoConfigForm.serializeObject();
+            let formConfig = {
+                title:          formDataObj.draggableViewTitle,
+                enableDrag:     !!formDataObj.enableDrag,
+                enableResize:   !!formDataObj.enableResize,
+                showStatusInfo: !!formDataObj.showStatusInfo,
+
+            };
+            let config = $.extend(true, {}, optionDev, formConfig);
+            $draggableDemoDev.draggableView(config);
+            return false;
+        });
+
     });
 </script>
 </body>

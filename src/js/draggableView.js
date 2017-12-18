@@ -20,9 +20,8 @@
 
     let _default = {};
     _default.setting = {
-        testX: 'defaultTestX',
         title:         '<h2 class="content-title">拖拽一下试试</h2>', // 拖拽窗体的标题
-        showStatusBar: true,                                        // 是否显示状态信息栏
+        showStatusBar: false,                                       // 是否显示状态信息栏
 
         wrapType: 1,                                                // 添加窗体外套的方式， 1-从原始内容扩展，原始内容缩小；2-原始内容不动，向外扩展
 
@@ -33,7 +32,7 @@
         dragLimitBottom: 0,                                         // 拖拽限制底部范围
         dragLimitRight:  0,                                         // 拖拽限制右侧范围
 
-        enableResize:                     true,                         // 是否可以拖拽调整窗体大小
+        enableResize:                 true,                         // 是否可以拖拽调整窗体大小
         enableDirectionKeyToMove:     true,                         // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
         directionKeyDownToMoveOffset: 1,                            // 按一次方向键移动窗体时的偏移量
         resizeMinWidth:               150,                          // 调整大小后的最小宽度
@@ -41,12 +40,12 @@
         resizeMaxWidth:               500,                          // 调整大小后的最大高度
         resizeMaxHeight:              500,                          // 调整大小后的最大高度
         // 显示内容的外套的配置
-        dragContent:                  {
-            padding:     '18px',
-            bgColor:     '#ddedf1',
-            borderWidth: '10px',
-            borderColor: '#a0b3d6',
-            borderStyle: 'solid'
+        dragContentWrap:                  {
+            padding:        '18px',
+            bgColor:        '#ddedf1',
+            borderWidth:    '10px',
+            borderColor:    '#a0b3d6',
+            borderStyle:    'solid'
         },
         // 拖拽移动框的配置
         dragMoveBar:                  {
@@ -64,26 +63,26 @@
         },
         // resize边框的配置
         dragBorder:                   {
-            topSize:     '60px',
-            bottomSize:  '60px',
-            leftSize:    '60px',
-            rightSize:   '60px',
-            topColor:    '#efdfed',
-            bottomColor: '#ceb455',
-            leftColor:   '#cdef75',
-            rightColor:  '#a7bbef',
-            bgColor:     'rgba(240, 243, 249, 0.44)'
+            topSize:        '60px',
+            bottomSize:     '60px',
+            leftSize:       '60px',
+            rightSize:      '60px',
+            topColor:       '#efdfed',
+            bottomColor:    '#ceb455',
+            leftColor:      '#cdef75',
+            rightColor:     '#a7bbef',
+            bgColor:        'rgba(240, 243, 249, 0.44)'
         },
         // 整体样式
         dragWrap:                     {
-            borderWidth:  '30px',
-            borderStyle:  'solid',
-            borderColor:  'rgba(248, 233, 104, 0.42)',
-            boxShadow:    '2px 2px 4px rgba(130, 130, 130, .5)',
-            borderRadius: '8px',
+            borderWidth:    '30px',
+            borderStyle:    'solid',
+            borderColor:    'rgba(248, 233, 104, 0.42)',
+            boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+            borderRadius:   '8px',
         },
         // 窗体移动时的事件
-        onWindowMove:                 undefined
+        onWindowMove:       undefined
     };
 
     let DraggableView = function (element, options) {
@@ -114,11 +113,14 @@
      * @returns {DraggableView}
      */
     DraggableView.prototype.init = function (options) {
+        if(this.checkIsInitialized()){
+            return this;
+        }
         this.options = $.extend(true, {}, _default.setting, options);
         this.inElement = {
             $originContent:         undefined,
             $dragWrap:              undefined,
-            $dragContent:           undefined,
+            $dragContentWrap:       undefined,
             $dragOperateWrap:       undefined,
             $dragMoveBar:           undefined,
             $dragBorder:            undefined,
@@ -129,7 +131,8 @@
             $dragBorderTopLeft:     undefined,
             $dragBorderTopRight:    undefined,
             $dragBorderBottomLeft:  undefined,
-            $dragBorderBottomRight: undefined
+            $dragBorderBottomRight: undefined,
+            $dratStatusWrap:        undefined,
         };
         this.data = {
             // 原始的数据记录(重置用)，只在开始时初始化一次，将不再改变
@@ -140,7 +143,7 @@
                     top:    0,
                     left:   0
                 },
-                dragContent:   {
+                dragContentWrap:   {
                     width:  0,
                     height: 0,
                 },
@@ -184,7 +187,7 @@
                     top:    0,
                     left:   0
                 },
-                dragContent:   {
+                dragContentWrap:   {
                     width:  0,
                     height: 0,
                 },
@@ -248,6 +251,43 @@
             }
         };
         this.render(this.options);
+        this.initialized = true;
+        return this;
+    };
+
+    /**
+     * @doc init
+     * @param options
+     * @returns {DraggableView}
+     */
+    DraggableView.prototype.checkIsInitialized = function (options) {
+        if(this.$element.hasClass('draggable-view-initialized')){
+            return true;
+        }
+        return false;
+    };
+
+    /**
+     * @doc 渲染
+     * @param options
+     * @returns {DraggableView}
+     */
+    DraggableView.prototype.render = function (options) {
+
+        this.calculateRenderSize(options);
+
+        this.buildDom(options);
+
+        this.injectStyle(options);
+
+        this.showStatusInfo(options);
+
+        this.bindMouseEvent(options);
+
+        this.bindWindowMoveEvent(options);
+
+        this.bindKeyEvent(options);
+
         return this;
     };
 
@@ -288,6 +328,8 @@
                 dynamic.resizeFlag = false;
             }
 
+            // 恢复窗体可选中
+            recoverTextSelectable(_this.inElement.$dragWrap);
         });
 
         this.bindDrag(options);
@@ -494,7 +536,7 @@
             dynamic.currentPosition.top = targetPosition.top;
 
             let dragWrapWindowOuterSize = getTargetWindowOuterSize(_this.inElement.$dragWrap);
-            let dragContentWindowOuterSize = getTargetWindowOuterSize(_this.inElement.$dragContent);
+            let dragContentWrapWindowOuterSize = getTargetWindowOuterSize(_this.inElement.$dragContentWrap);
             let contentWindowOuterSize = getTargetWindowOuterSize(_this.inElement.$originContent);
             let dragMoveBarWindowOuterSize = getTargetWindowOuterSize(_this.inElement.$dragMoveBar);
             let dragBorderTopOuterSize = getTargetWindowOuterSize(_this.inElement.$dragBorderTop);
@@ -503,8 +545,8 @@
             calculated.dragWrap.width = dragWrapWindowOuterSize.outerWidth;
             calculated.dragWrap.height = dragWrapWindowOuterSize.outerHeight;
             // 拖拽内容外套
-            calculated.dragContent.width = dragContentWindowOuterSize.outerWidth;
-            calculated.dragContent.height = dragContentWindowOuterSize.outerHeight;
+            calculated.dragContentWrap.width = dragContentWrapWindowOuterSize.outerWidth;
+            calculated.dragContentWrap.height = dragContentWrapWindowOuterSize.outerHeight;
             // 原始内容
             calculated.originContent.width = contentWindowOuterSize.outerWidth;
             calculated.originContent.height = contentWindowOuterSize.outerHeight;
@@ -529,7 +571,7 @@
             /*console.log('moveOffset： ');
             console.log(moveOffset);
             console.log(this.inlineData);*/
-            let dragWrapNowSize = {}, dragContentNowSize = {}, contentNowSize = {},
+            let dragWrapNowSize = {}, dragContentWrapNowSize = {}, contentNowSize = {},
                 dragMoveBarNowSize = {}, dragBorderVerticalNowSize = {}, dragBorderHorizontalNowSize = {};
             // 左右上下四个角拖动时
             let cornerFlag = false;
@@ -545,7 +587,7 @@
                     offsetY = 0 - offsetY;
                 }
                 dragWrapNowSize.height = calculated.dragWrap.height + offsetY;
-                dragContentNowSize.height = calculated.dragContent.height + offsetY;
+                dragContentWrapNowSize.height = calculated.dragContentWrap.height + offsetY;
                 contentNowSize.height = calculated.originContent.height + offsetY;
                 dragBorderVerticalNowSize.height = calculated.dragBorder.verticalHeight + offsetY;
 
@@ -562,7 +604,7 @@
                 }
                 // 鼠标向上移动时，偏移量为负值
                 dragWrapNowSize.width = calculated.dragWrap.width + offsetX;
-                dragContentNowSize.width = calculated.dragContent.width + offsetX;
+                dragContentWrapNowSize.width = calculated.dragContentWrap.width + offsetX;
                 dragMoveBarNowSize.width = calculated.dragMoveBar.width + offsetX;
                 contentNowSize.width = calculated.originContent.width + offsetX;
                 dragBorderHorizontalNowSize.width = calculated.dragBorder.horizontalWidth + offsetX;
@@ -580,7 +622,7 @@
 
             // 改变窗体大小
             changeTargetWindowSize(_this.inElement.$dragWrap, dragWrapNowSize);
-            changeTargetWindowSize(_this.inElement.$dragContent, dragContentNowSize);
+            changeTargetWindowSize(_this.inElement.$dragContentWrap, dragContentWrapNowSize);
             changeTargetWindowSize(_this.inElement.$originContent, contentNowSize);
             changeTargetWindowSize(_this.inElement.$dragMoveBar, dragMoveBarNowSize);
             changeTargetWindowSize(_this.inElement.$dragBorderTop, dragBorderHorizontalNowSize);
@@ -591,30 +633,6 @@
             this.showStatusInfo(options);
 
         }
-        return this;
-    };
-
-    /**
-     * @doc 渲染
-     * @param options
-     * @returns {DraggableView}
-     */
-    DraggableView.prototype.render = function (options) {
-
-        this.calculateRenderSize(options);
-
-        this.buildDom(options);
-
-        this.injectStyle(options);
-
-        this.showStatusInfo(options);
-
-        this.bindMouseEvent(options);
-
-        this.bindWindowMoveEvent(options);
-
-        this.bindKeyEvent(options);
-
         return this;
     };
 
@@ -639,45 +657,45 @@
             left:   originContentPosition.left
         };
         // [计算项] 2.【拖拽的窗体内容区域的宽高】
-        let dragContentWidth = origin.originContent.width + parseInt(options.dragContent.padding) * 2 + parseInt(options.dragContent.borderWidth) * 2,
-            dragContentHeight = origin.originContent.height + parseInt(options.dragContent.padding) * 2 + parseInt(options.dragContent.borderWidth) * 2;
+        let dragContentWrapWidth = origin.originContent.width + parseInt(options.dragContentWrap.padding) * 2 + parseInt(options.dragContentWrap.borderWidth) * 2,
+            dragContentWrapHeight = origin.originContent.height + parseInt(options.dragContentWrap.padding) * 2 + parseInt(options.dragContentWrap.borderWidth) * 2;
 
-        origin.dragContent = {
-            width:  dragContentWidth,
-            height: dragContentHeight
+        origin.dragContentWrap = {
+            width:  dragContentWrapWidth,
+            height: dragContentWrapHeight
         };
         // [计算项] 3.【窗体拖拽移动操作区域的宽高】
         origin.dragMoveBar = {
-            width:  origin.dragContent.width,
+            width:  origin.dragContentWrap.width,
             height: parseInt(options.dragMoveBar.height) + parseInt(options.dragMoveBar.borderTopWidth) + parseInt(options.dragMoveBar.borderTopWidth)
         };
         // [计算项] 4.【拖拽改变大小的水平边框的宽度、竖直边框的高度】
         origin.dragBorder = {
-            horizontalWidth:   origin.dragContent.width - parseInt(options.dragContent.borderWidth) * 2,
-            verticalHeight:    origin.dragContent.height + origin.dragMoveBar.height - parseInt(options.dragContent.borderWidth) * 2,
+            horizontalWidth:   origin.dragContentWrap.width - parseInt(options.dragContentWrap.borderWidth) * 2,
+            verticalHeight:    origin.dragContentWrap.height + origin.dragMoveBar.height - parseInt(options.dragContentWrap.borderWidth) * 2,
             cornerTopLeft:     {
-                width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContent.borderWidth),
-                height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
+                width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContentWrap.borderWidth),
+                height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContentWrap.borderWidth),
             },
             cornerTopRight:    {
-                width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContent.borderWidth),
-                height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
+                width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContentWrap.borderWidth),
+                height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContentWrap.borderWidth),
             },
             cornerBottomLeft:  {
-                width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContent.borderWidth),
-                height: parseInt(options.dragBorder.bottomSize) + parseInt(options.dragContent.borderWidth),
+                width:  parseInt(options.dragBorder.leftSize) + parseInt(options.dragContentWrap.borderWidth),
+                height: parseInt(options.dragBorder.bottomSize) + parseInt(options.dragContentWrap.borderWidth),
             },
             cornerBottomRight: {
-                width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContent.borderWidth),
-                height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContent.borderWidth),
+                width:  parseInt(options.dragBorder.rightSize) + parseInt(options.dragContentWrap.borderWidth),
+                height: parseInt(options.dragBorder.topSize) + parseInt(options.dragContentWrap.borderWidth),
             },
         };
         // 整个窗体的宽高
         origin.dragWrap = {
-            width:  dragContentWidth + parseInt(options.dragBorder.leftSize) + parseInt(options.dragBorder.rightSize) + (parseInt(options.dragWrap.borderWidth) * 2),
-            height: dragContentHeight + parseInt(options.dragBorder.topSize) + parseInt(options.dragBorder.bottomSize) + origin.dragMoveBar.height + parseInt(options.dragWrap.borderWidth) * 2,
-            top:    origin.originContent.top - (parseInt(options.dragContent.padding) + parseInt(options.dragContent.borderWidth) + parseInt(options.dragBorder.topSize) + parseInt(options.dragWrap.borderWidth) + origin.dragMoveBar.height),
-            left:   origin.originContent.left - (parseInt(options.dragContent.padding) + parseInt(options.dragContent.borderWidth) + parseInt(options.dragBorder.leftSize) + parseInt(options.dragWrap.borderWidth)),
+            width:  dragContentWrapWidth + parseInt(options.dragBorder.leftSize) + parseInt(options.dragBorder.rightSize) + (parseInt(options.dragWrap.borderWidth) * 2),
+            height: dragContentWrapHeight + parseInt(options.dragBorder.topSize) + parseInt(options.dragBorder.bottomSize) + origin.dragMoveBar.height + parseInt(options.dragWrap.borderWidth) * 2,
+            top:    origin.originContent.top - (parseInt(options.dragContentWrap.padding) + parseInt(options.dragContentWrap.borderWidth) + parseInt(options.dragBorder.topSize) + parseInt(options.dragWrap.borderWidth) + origin.dragMoveBar.height),
+            left:   origin.originContent.left - (parseInt(options.dragContentWrap.padding) + parseInt(options.dragContentWrap.borderWidth) + parseInt(options.dragBorder.leftSize) + parseInt(options.dragWrap.borderWidth)),
         };
         dynamic.currentPosition.top = origin.dragWrap.top;
         dynamic.currentPosition.left = origin.dragWrap.left;
@@ -693,9 +711,11 @@
     DraggableView.prototype.buildDom = function (options) {
         let $dragWrap = $(this.template.dragWrap);
         let $dragOperateWrap = $(this.template.dragOperateWrap);
+        let $dratStatusWrap = $(this.template.dratStatusWrap);
+        let $dragStatusInfo = $(this.template.dratStatusBar);
 
         let $dragMoveBar = $(this.template.dragMoveBar);
-        $dragMoveBar.append($(this.options.title));
+        $dragMoveBar.append(this.options.title);
         let $dragBorderTop = $(this.template.dragBorderTop),
             $dragBorderBottom = $(this.template.dragBorderBottom),
             $dragBorderLeft = $(this.template.dragBorderLeft),
@@ -713,20 +733,27 @@
             // 下边及下边两个角
             .append($dragBorderBottomLeft).append($dragBorderBottom).append($dragBorderBottomRight);
 
-        let $dragContent = $(this.template.dragContent);
+        let $dragContentWrap = $(this.template.dragContentWrap);
 
-        this.$element.wrap($dragContent);
+        this.$element.wrap($dragContentWrap);
+        this.$element.addClass('draggable-view-initialized').addClass('draggable-view-content');
 
-        let $dragContentNew = this.$element.parent();
-        $dragContentNew.wrap($dragWrap);
+        let $dragContentWrapNew = this.$element.parent();
+        $dragContentWrapNew.wrap($dragWrap);
 
-        let $dragWrapNew = $dragContentNew.parent();
+        let $dragWrapNew = $dragContentWrapNew.parent();
         $dragWrapNew.prepend($dragOperateWrap);
+
+        $dragWrapNew.append($dratStatusWrap
+            .append($dragStatusInfo)
+        );
 
         this.inElement.$originContent         = this.$element;
         this.inElement.$dragWrap              = $dragWrapNew;
-        this.inElement.$dragContent           = $dragContentNew;
+        this.inElement.$dragContentWrap       = $dragContentWrapNew;
         this.inElement.$dragOperateWrap       = $dragOperateWrap;
+        this.inElement.$dratStatusWrap        = $dratStatusWrap;
+        this.inElement.$dragStatusInfo        = $dragStatusInfo;
         this.inElement.$dragMoveBar           = $dragMoveBar;
         this.inElement.$dragBorder            = $dragWrapNew.find('.drag-border');
         this.inElement.$dragBorderTop         = $dragBorderTop;
@@ -753,15 +780,15 @@
             left: 'unset',
             top:  'unset'
         });
-        // $dragContent
-        this.inElement.$dragContent.css({
+        // $dragContentWrap
+        this.inElement.$dragContentWrap.css({
             left:               options.dragBorder.leftSize,
             bottom:             options.dragBorder.bottomSize,
-            width:              origin.dragContent.width + 'px',
-            height:             origin.dragContent.height + 'px',
-            border:             options.dragContent.borderWidth + ' ' + options.dragContent.borderStyle + ' ' + options.dragContent.borderColor,
-            padding:            options.dragContent.padding,
-            'background-color': options.dragContent.bgColor
+            width:              origin.dragContentWrap.width + 'px',
+            height:             origin.dragContentWrap.height + 'px',
+            border:             options.dragContentWrap.borderWidth + ' ' + options.dragContentWrap.borderStyle + ' ' + options.dragContentWrap.borderColor,
+            padding:            options.dragContentWrap.padding,
+            'background-color': options.dragContentWrap.bgColor
         });
 
         // $dragMoveBar
@@ -857,16 +884,14 @@
         // 1. 当前position currentPositionInfo
         // 2. 当前此次移动的偏移position moveOffsetInfo
         // 3. 累积移动的偏移position moveOffsetTotalInfo
-        let $dragStatusInfo = $(this.template.dratStatusBar);
+        let $dragStatusInfo = this.inElement.$dragStatusInfo;
         let dynamic = this.data.dynamic;
 
-        let $moveOffsetInfo = '<span class="info-item move-offset-info"><span class="field">x :</span><span class="value">' + this.options.testX + dynamic.moveOffset.offsetX
+        let $moveOffsetInfo = '<span class="info-item move-offset-info"><span class="field">x :</span><span class="value">' + dynamic.moveOffset.offsetX
             + '<span><span class="field">y :</span><span class="value">' + dynamic.moveOffset.offsetY + '</span></span>';
         let $moveOffsetTotalInfo = '<span class="info-item move-offset-total-info"><span class="field">x :</span><span class="value">' + dynamic.moveOffsetTotal.offsetX
             + '<span><span class="field">y :</span><span class="value">' + dynamic.moveOffsetTotal.offsetY + '</span></span>';
-        let windowInfo = '';
-        $dragStatusInfo.append($moveOffsetInfo).append($moveOffsetTotalInfo);
-        this.inElement.$dragBorderBottom.empty().append($dragStatusInfo);
+        $dragStatusInfo.empty().append($moveOffsetInfo).append($moveOffsetTotalInfo);
     };
 
     /**
@@ -874,7 +899,7 @@
      */
     DraggableView.prototype.template = {
         dragWrap:              '<div class="drag-wrap">',
-        dragContent:           '<div class="drag-content">',
+        dragContentWrap:       '<div class="drag-content-wrap">',
         dragOperateWrap:       '<div class="drag-operate-wrap"></div>',
         dragMoveBar:           '<div class="drag-move-bar"></div>',
         dragBorderTop:         '<div class="drag-border drag-border-top"></div>',
@@ -885,7 +910,8 @@
         dragBorderTopRight:    '<div class="drag-border drag-border-top-right"></div>',
         dragBorderBottomLeft:  '<div class="drag-border drag-border-bottom-left"></div>',
         dragBorderBottomRight: '<div class="drag-border drag-border-bottom-right"></div>',
-        dratStatusBar:         '<div class="drag-status-bar"></div>'
+        dratStatusWrap:        '<div class="drag-status-wrap"></div>',
+        dratStatusBar:         '<div class="drag-status-bar"></div>',
     };
 
     /**
@@ -978,6 +1004,7 @@
         $dom.on('selectstart', function (e) {
             e.stopPropagation();
         });
+        $dom.css('user-select', 'none');
     }
 
     /**
@@ -985,6 +1012,7 @@
      */
     function recoverTextSelectable($dom) {
         // todo
+        $dom.css('user-select', 'auto');
     }
 
     function logError(message) {
@@ -1022,6 +1050,3 @@
     };
 
 })(jQuery, window, document);
-
-
-

@@ -6,8 +6,8 @@
  */
 .drag-wrap {
   /*
-  top: $originContentTop - ($dragContentPadding + $dragContentBorderWidth + $dragBorderTopSize + $dragWrapBorderSize + $dragMoveBarHeight);
-  left: $originContentLeft - ($dragContentPadding + $dragContentBorderWidth + $dragBorderLeftSize + $dragWrapBorderSize);
+  top: $originContentTop - ($dragContentWrapPadding + $dragContentWrapBorderWidth + $dragBorderTopSize + $dragWrapBorderSize + $dragMoveBarHeight);
+  left: $originContentLeft - ($dragContentWrapPadding + $dragContentWrapBorderWidth + $dragBorderLeftSize + $dragWrapBorderSize);
   width: $dragWrapWidth;
   height: $dragWrapHeight;
   */ }
@@ -42,33 +42,33 @@
   font-weight: normal;
   background-color: #258cef;
   color: #fff;
-  cursor: move;
-  z-index: 2; }
+  cursor: move; }
 
 .drag-wrap .drag-operate-wrap .drag-move-bar * {
   margin: 0;
   font-size: inherit;
   font-weight: inherit; }
 
-.drag-wrap .drag-content {
+.drag-wrap .drag-content-wrap {
   position: absolute;
   /*
   left: $dragBorderLeftSize;
   bottom: $dragBorderBottomSize;
-  width: $dragContentWidth;
-  height: $dragContentHeight;
-  padding: $dragContentPadding;
-  border: $dragContentBorderWidth $dragWrapBorderStyle $dragContentBorderColor;*/
-  overflow: auto;
+  width: $dragContentWrapWidth;
+  height: $dragContentWrapHeight;
+  padding: $dragContentWrapPadding;
+  border: $dragContentWrapBorderWidth $dragWrapBorderStyle $dragContentWrapBorderColor;*/
   background-color: #ddedf1; }
 
+.drag-wrap .drag-content-wrap .draggable-view-content {
+  overflow: auto; }
+
 /* 当窗体大小变得太小时，原始内容应出现滚动条 */
-/*.drag-wrap .drag-content > *{overflow:auto;}*/
+/*.drag-wrap .drag-content-wrap > *{overflow:auto;}*/
 .drag-wrap .drag-operate-wrap .drag-border {
   /*background-color: $dragBorderBgColor;*/ }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
-    position: absolute;
-    z-index: 2; }
+    position: absolute; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
     top: 0; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
@@ -112,8 +112,7 @@
     */
     cursor: e-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
-    position: absolute;
-    z-index: 3; }
+    position: absolute; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
     /*
     width: $dragBorderCornerTopLeftWidth;
@@ -167,9 +166,17 @@
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
     background-color: #ef7f44; }
 
+.drag-wrap .drag-status-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%; }
+
 .drag-wrap .drag-status-bar {
   color: #fff;
-  font-size: 12px; }
+  font-size: 12px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto; }
 
 .drag-wrap .drag-status-bar .info-item {
   margin-right: 10px; }

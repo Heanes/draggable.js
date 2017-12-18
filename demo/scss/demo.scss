@@ -18,7 +18,7 @@ html *,body *{box-sizing:inherit;}
 .demo-wrap{padding:40px;}
 .draggable-demo-dev{
   position:absolute;
-  top: 300px;
+  top: 200px;
   left: 200px;
   background-color:rgba(32, 83, 231, 0.35);
   z-index:2;
@@ -61,4 +61,11 @@ html *,body *{box-sizing:inherit;}
   padding:10px;
   font-size:18px;
   background-color:#fff;
+}
+
+
+.demo-config{
+  position:absolute;
+  right:10px;
+  top:20%;
 }
