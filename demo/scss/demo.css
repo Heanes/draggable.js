@@ -74,5 +74,10 @@ html *, body * {
   position: absolute;
   right: 10px;
   top: 20%; }
+  .demo-config .demo-config-form .form-group {
+    margin: 10px 0; }
+  .demo-config .demo-config-form .form-handle {
+    margin: 20px 0;
+    text-align: center; }
 
 /*# sourceMappingURL=demo.css.map */

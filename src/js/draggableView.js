@@ -5,12 +5,13 @@
  */
 
 /*
-  todo  1. 当边缘超出屏幕边缘时不可继续拖拽
+  todo  0. 初始化时就判断窗体距离屏幕边缘太近时的问题，并进行处理
+        1. 当边缘超出屏幕边缘时不可继续拖拽
         2. 指定可拖拽的边缘区域
         3. 拖动前的事件、拖动后的事件
         4. 鼠标拖拽时，左右侧边框移动到浏览器边缘时，自动按当前浏览器窗口分隔为一半宽度，上边框移动到顶部时最大化。贴边隐藏功能
         5. 最小化，最大化，关闭按钮，仿windows 10 windows 7 windows xp mac os风格
-        6. 支持指定拖拽移动的dom
+        6. 支持指定拖拽移动的dom，推动改dom即可拖动窗体
         7. 多个实例时，遮盖问题
 */
 
@@ -78,7 +79,7 @@
             borderWidth:    '30px',
             borderStyle:    'solid',
             borderColor:    'rgba(248, 233, 104, 0.42)',
-            boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+            boxShadow:      'rgba(130, 130, 130, 0.5) 0px 0px 4px 2px',
             borderRadius:   '8px',
         },
         // 窗体移动时的事件
@@ -251,7 +252,6 @@
             }
         };
         this.render(this.options);
-        this.initialized = true;
         return this;
     };
 
@@ -335,6 +335,19 @@
         this.bindDrag(options);
         this.bindResize(options);
         return this;
+    };
+
+    /**
+     * @doc 检查是否还能拖拽
+     * @param options
+     */
+    DraggableView.prototype.checkCanDrag = function (options) {
+        // 配置项是否允许拖拽
+        if (options.enableDrag || options.enableResize) {
+            return false;
+        }
+
+        // 限制拖拽的范围
     };
 
     /**

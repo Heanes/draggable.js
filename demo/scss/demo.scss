@@ -68,4 +68,15 @@ html *,body *{box-sizing:inherit;}
   position:absolute;
   right:10px;
   top:20%;
+
+  .demo-config-form{
+
+    .form-group{
+      margin:10px 0;
+    }
+    .form-handle{
+      margin:20px 0;
+      text-align:center;
+    }
+  }
 }

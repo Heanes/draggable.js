@@ -54,14 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label class="config-label">窗体标题</label>
-                    <input class="form-control" name="draggableViewTitle" value="拖拽一下试试"/>
-                </div>
-                <div class="form-group">
-                    <label class="config-label">是否显示状态栏</label>
-                    <select name="showStatusInfo">
-                        <option value="1">是</option>
-                        <option value="0">否</option>
-                    </select>
+                    <input type="text" name="draggableViewTitle" value="拖拽一下试试"/>
                 </div>
                 <div class="form-handle">
                     <button class="btn btn-primary demo-config-conirm-btn">确认</button>
@@ -146,17 +139,17 @@
             },
             // 拖拽移动框的配置
             dragMoveBar: {
-                height:           '80px',
-                padding:          '0 10px',
-                bgColor:          '#258cef',
-                color:            '#fff',
-                borderTopWidth:    '20px',
-                borderBottomWidth: '20px',
-                borderLeftWidth:   '20px',
-                borderRightWidth:  '20px',
-                borderStyle:      'solid',
-                borderColor:      '#c9e7e4',
-                fontSize:         '14px'
+                height:             '80px',
+                padding:            '0 10px',
+                bgColor:            '#258cef',
+                color:              '#fff',
+                borderTopWidth:     '20px',
+                borderBottomWidth:  '20px',
+                borderLeftWidth:    '20px',
+                borderRightWidth:   '20px',
+                borderStyle:        'solid',
+                borderColor:        '#c9e7e4',
+                fontSize:           '14px'
             },
             // resize边框的配置
             dragBorder: {
@@ -174,9 +167,10 @@
                 borderWidth:    '30px',
                 borderStyle:    'solid',
                 borderColor:    'rgba(248, 233, 104, 0.42)',
-                boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+                boxShadow:      'rgba(130, 130, 130, 0.5) 0px 0px 4px 2px',
                 borderRadius:   '8px',
             },
+            showStatusBar: false,                                // 是否显示状态信息栏
             onWindowMove: function () {
                 // console.log('You had move the target dev window');
             }
@@ -200,17 +194,17 @@
             },
             // 拖拽移动框的配置
             dragMoveBar: {
-                height:           '60px',
-                padding:          '0 10px',
-                bgColor:          '#258cef',
-                color:            '#fff',
-                borderTopWidth:    '10px',
-                borderBottomWidth: '10px',
-                borderLeftWidth:   '10px',
-                borderRightWidth:  '10px',
-                borderStyle:      'solid',
-                borderColor:      '#c9e7e4',
-                fontSize:         '14px'
+                height:             '60px',
+                padding:            '0 10px',
+                bgColor:            '#258cef',
+                color:              '#fff',
+                borderTopWidth:     '10px',
+                borderBottomWidth:  '10px',
+                borderLeftWidth:    '10px',
+                borderRightWidth:   '10px',
+                borderStyle:        'solid',
+                borderColor:        '#c9e7e4',
+                fontSize:           '14px'
             },
             // resize边框的配置
             dragBorder: {
@@ -228,13 +222,13 @@
                 borderWidth:    '0',
                 borderStyle:    'solid',
                 borderColor:    'rgba(248, 233, 104, 0.42)',
-                boxShadow:      '2px 2px 4px rgba(130, 130, 130, .5)',
+                boxShadow:      'rgba(130, 130, 130, 0.5) 0px 0px 4px 2px',
                 borderRadius:   '8px',
             },
             onWindowMove: function () {
                 // console.log('You had move the target normal window');
             },
-            showStatusBar: true,                                // 是否显示状态信息栏
+            showStatusBar: false,                                // 是否显示状态信息栏
         };
 
         $demoConfigConfirmBtn.on('click', function(){
