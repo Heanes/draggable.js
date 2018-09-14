@@ -15,6 +15,7 @@
 .drag-wrap {
   position: absolute;
   display: inline-block;
+  z-index: 99;
   /*
   border: $dragWrapBorderSize $dragWrapBorderStyle $dragWrapBorderColor;
   border-radius: $dragBorderRadius;
@@ -96,21 +97,19 @@
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
     right: 0; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
-    cursor: e-resize; }
+    cursor: ew-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
     /*
     top: $dragBorderCornerTopLeftHeight;
     width: $dragBorderLeftSize;
     height: $dragBorderVerticalHeight;
-    */
-    cursor: e-resize; }
+    */ }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
     /*
     top: $dragBorderCornerTopRightHeight;
     width: $dragBorderRightSize;
     height: $dragBorderVerticalHeight;
-    */
-    cursor: e-resize; }
+    */ }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
     position: absolute; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
@@ -146,9 +145,9 @@
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
     bottom: 0; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
-    cursor: nw-resize; }
+    cursor: nwse-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
-    cursor: ne-resize; }
+    cursor: nesw-resize; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
     background-color: #efdfed; }
   .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
@@ -184,4 +183,4 @@
 .drag-wrap .drag-status-bar .info-item .field {
   margin: 0 4px; }
 
-/*# sourceMappingURL=drag.css.map */
+/*# sourceMappingURL=draggableView.css.map */

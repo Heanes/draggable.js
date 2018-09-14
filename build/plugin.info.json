@@ -1,0 +1,28 @@
+{
+    "name":         "draggableView",
+    "version":      "1.0.0",
+    "title":        "draggableView",
+    "description":  "A powerful draggableView jquery plugin",
+    "author":       {
+        "name":  "Heanes",
+        "email": "heanes#163.com",
+        "url":   "https://www.heanes.com/"
+    },
+    "licenses": {
+        "type": "MIT License",
+        "url": "http://opensource.org/licenses/MIT"
+    },
+    "dependencies": {
+        "jquery": ">=1.7"
+    },
+    "keywords":     [
+        "draggableView, draggable, drag"
+    ],
+    "homepage":     "https://github.com/heanes/draggableView.js",
+    "demo":         "https://github.com/heanes/draggableView.js",
+    "bugs":         {
+        "url": "https://github.com/heanes/draggableView.js/issues"
+    },
+    "docs":         "https://github.com/heanes/draggableView.js",
+    "download":     "https://github.com/heanes/draggableView.js/archive/master.zip"
+}

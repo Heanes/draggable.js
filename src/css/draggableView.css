@@ -1,0 +1,209 @@
+@charset "UTF-8";
+/**
+ * @doc drag可拖拽区块
+ * @author Heanes
+ * @time 2017-03-03 18:50:25 周五
+ */
+.drag-wrap {
+  top: 91px;
+  left: 211px;
+  width: 778px;
+  height: 698px;
+  position: fixed;
+  display: inline-block;
+  z-index: 99;
+  /*
+  border: $dragWrapBorderSize $dragWrapBorderStyle $dragWrapBorderColor;
+  border-radius: $dragBorderRadius;
+  box-shadow: $dragWrapBoxShadow;
+  */ }
+  .drag-wrap .drag-operate-wrap .drag-move-bar {
+    position: absolute;
+    text-align: center;
+    /*
+     left: $dragBorderLeftSize;
+     top: $dragBorderTopSize;
+     width: $dragMoveBarWidth;
+     height: $dragMoveBarHeight;
+     padding: 0 10px;
+     border-style: $dragMoveBarBorderStyle;
+     border-color: $dragMoveBarBorderColor;
+     border-top-width: $dragMoveBarBorderTopSize;
+     border-bottom-width: $dragMoveBarBorderBottomSize;
+     border-left-width: $dragMoveBarBorderLeftSize;
+     border-right-width: $dragMoveBarBorderRightSize;
+     line-height: $dragMoveBarHeight - ($dragMoveBarBorderTopSize + $dragMoveBarBorderBottomSize);
+     */
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    background-color: #258cef;
+    color: #fff;
+    cursor: move; }
+    .drag-wrap .drag-operate-wrap .drag-move-bar * {
+      margin: 0;
+      font-size: inherit;
+      font-weight: inherit; }
+    .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap {
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      height: 100%;
+      margin-top: -8px;
+      cursor: default; }
+      .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn {
+        display: inline-block;
+        border-radius: 50%;
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+        font-size: 12px; }
+        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn span {
+          display: none;
+          height: 14px;
+          line-height: 14px;
+          vertical-align: top;
+          color: #16701a; }
+        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-min {
+          background-color: #ffbd2e; }
+          .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-min:hover {
+            box-shadow: 0 0 2px 1px rgba(253, 208, 78, 0.9); }
+        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-max {
+          background-color: #27c93f; }
+          .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-max:hover {
+            box-shadow: 0 0 2px 1px rgba(24, 230, 60, 0.9); }
+        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-close {
+          background-color: #ff5f56; }
+          .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-close:hover {
+            box-shadow: 0 0 2px 1px rgba(249, 58, 43, 0.9); }
+      .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap:hover .drag-op-btn span {
+        display: inline-block; }
+  .drag-wrap .drag-operate-wrap .drag-border {
+    /*background-color: $dragBorderBgColor;*/ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+      position: absolute; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
+      top: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+      bottom: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+      cursor: ns-resize; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
+      /*
+      left: $dragBorderCornerTopLeftWidth;
+      width: $dragBorderHorizontalWidth;
+      height: $dragBorderTopSize;
+      */
+      cursor: ns-resize; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+      /*
+      left: $dragBorderCornerBottomLeftWidth;
+      width: $dragBorderHorizontalWidth;
+      height: $dragBorderBottomSize;
+      line-height: $dragBorderBottomSize;
+      */
+      padding: 0 10px;
+      cursor: ns-resize; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+      left: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
+      right: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+      cursor: ew-resize; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+      /*
+      top: $dragBorderCornerTopLeftHeight;
+      width: $dragBorderLeftSize;
+      height: $dragBorderVerticalHeight;
+      */ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
+      /*
+      top: $dragBorderCornerTopRightHeight;
+      width: $dragBorderRightSize;
+      height: $dragBorderVerticalHeight;
+      */ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      position: absolute; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
+      /*
+      width: $dragBorderCornerTopLeftWidth;
+      height: $dragBorderCornerTopLeftHeight;
+      border-top-left-radius: $dragBorderRadius;
+      */ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+      /*
+      width: $dragBorderCornerTopRightWidth;
+      height: $dragBorderCornerTopRightHeight;
+      border-top-right-radius: $dragBorderRadius;
+      */ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+      /*
+      width: $dragBorderCornerBottomLeftWidth;
+      height: $dragBorderCornerBottomLeftHeight;
+      border-bottom-left-radius: $dragBorderRadius;
+      */ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      /*
+      width: $dragBorderCornerBottomRightWidth;
+      height: $dragBorderCornerBottomRightHeight;
+      border-bottom-right-radius: $dragBorderRadius;
+      */ }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+      top: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+      left: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      right: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      bottom: 0; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      cursor: nwse-resize; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+      cursor: nesw-resize; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
+      background-color: #efdfed; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
+      background-color: #ceb455; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+      background-color: #cdef75; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
+      background-color: #a7bbef; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
+      background-color: #a7bbef; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+      background-color: #d866ef; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
+      background-color: #89ef5a; }
+    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      background-color: #ef7f44; }
+  .drag-wrap .drag-content-wrap {
+    position: absolute;
+    /*
+    left: $dragBorderLeftSize;
+    bottom: $dragBorderBottomSize;
+    width: $dragContentWrapWidth;
+    height: $dragContentWrapHeight;
+    padding: $dragContentWrapPadding;
+    border: $dragContentWrapBorderWidth $dragWrapBorderStyle $dragContentWrapBorderColor;*/
+    background-color: #ddedf1; }
+    .drag-wrap .drag-content-wrap .draggable-view-content {
+      overflow: auto; }
+  .drag-wrap .drag-status-wrap {
+    position: absolute;
+    bottom: 0;
+    width: 100%; }
+    .drag-wrap .drag-status-wrap .drag-status-bar {
+      color: #fff;
+      font-size: 12px;
+      max-width: 100%;
+      max-height: 100%;
+      overflow: auto; }
+      .drag-wrap .drag-status-wrap .drag-status-bar .info-item {
+        margin-right: 10px; }
+        .drag-wrap .drag-status-wrap .drag-status-bar .info-item .field {
+          margin: 0 4px; }
+
+/* 当窗体大小变得太小时，原始内容应出现滚动条 */
+/*.drag-wrap .drag-content-wrap > *{overflow:auto;}*/
+
+/*# sourceMappingURL=draggableView.css.map */

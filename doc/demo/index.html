@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="Heanes heanes.com email(heanes@163.com)">
+    <meta name="keywords" content="软件,商务,HTML,tutorials,source codes">
+    <meta name="description" content="描述">
+    <link rel="stylesheet" href="//ui.heanes.com/dist/css/heanesUI.css"/>
+    <link rel="stylesheet" href="../../src/css/draggableView.css"/>
+    <link rel="stylesheet" href="../static/css/demo.css"/>
+    <title>draggableView.js Demo</title>
+</head>
+<body>
+<div class="main">
+
+    <div class="drag-wrap">
+        <div class="drag-operate-wrap">
+            <div class="drag-move-bar">
+                <div class="drag-op-menu-wrap">
+                    <div class="drag-op-btn drag-op-menu-close"><span>x</span></div>
+                    <div class="drag-op-btn drag-op-menu-min"><span>-</span></div>
+                    <div class="drag-op-btn drag-op-menu-max"><span>+</span></div>
+                </div>
+                <div class="drag-title-wrap">拖拽一下试试</div>
+            </div>
+            <div class="drag-border drag-border-top-left"></div>
+            <div class="drag-border drag-border-top"></div>
+            <div class="drag-border drag-border-top-right"></div>
+            <div class="drag-border drag-border-left"></div>
+            <div class="drag-border drag-border-right"></div>
+            <div class="drag-border drag-border-bottom-left"></div>
+            <div class="drag-border drag-border-bottom"></div>
+            <div class="drag-border drag-border-bottom-right"></div>
+        </div>
+        <div class="drag-content-wrap">
+            <div class="common-content draggable-demo-dev draggable-view-initialized draggable-view-content">
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+            </div>
+        </div>
+        <div class="drag-status-wrap">
+            <div class="drag-status-bar"></div>
+        </div>
+    </div>
+
+
+
+    <div class="demo-wrap" style="display: none;">
+        <div class="demo-group">
+            <div class="draggable-demo-dev-wrap">
+                <h3>原本固定的内容：</h3>
+                <div class="common-content draggable-demo-dev">
+                    <p>This is test text just hold the place. This is long paragraph.</p>
+                    <p>This is test text just hold the place. This is long paragraph.</p>
+                    <p>This is test text just hold the place. This is long paragraph.</p>
+                    <p>This is test text just hold the place. This is long paragraph.</p>
+                    <p>This is test text just hold the place. This is long paragraph.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-config">
+            <form class="demo-config-form" name="demo-config-form">
+                <div class="form-group">
+                    <label class="config-label" for="draggableViewTitle">窗体标题</label>
+                    <input type="text" name="draggableViewTitle" id="draggableViewTitle" value="拖拽一下试试"/>
+                </div>
+                <div class="form-group">
+                    <label class="config-label" for="enableDrag">可以拖动</label>
+                    <select name="enableDrag" id="enableDrag">
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="config-label" for="enableResize">可以改变大小</label>
+                    <select name="enableResize" id="enableResize">
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="config-label" for="showStatusInfo">显示状态栏</label>
+                    <select name="showStatusInfo" id="showStatusInfo">
+                        <option value="true">是</option>
+                        <option value="false">否</option>
+                    </select>
+                </div>
+                <div class="form-handle">
+                    <button class="btn btn-primary demo-config-confirm-btn">确认</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="../static/vendor/js/jquery/2.2.4/jquery.2.2.4.min.js"></script>
+<script type="text/javascript" src="../../src/js/draggableView.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        console.clear();
+
+        $.fn.serializeObject = function() {
+            let o = {};
+            let a = this.serializeArray();
+            $.each(a, function () {
+                if (o[this.name] !== undefined) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+        };
+
+        let optionDev = {
+            testX: 'devTestX',
+            dragDirection: 'all',                               // 可以拖动的方向，x|y|all
+            enableDirectionKeyToMove: true,                     // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
+            directionKeyDownToMoveOffset: 5,                    // 按一次方向键移动窗体时的偏移量
+            // 显示内容的外套的配置
+            dragContentWrap: {
+                padding:        '1px',
+                bgColor:        '#ddedf1',
+                borderWidth:    '1px',
+                borderColor:    '#a0b3d6',
+                borderStyle:    'solid'
+            },
+            // 拖拽移动框的配置
+            dragMoveBar: {
+                height:             '20px',
+                padding:            '0 10px',
+                bgColor:            '#258cef',
+                color:              '#fff',
+                borderTopWidth:     '1px',
+                borderBottomWidth:  '1px',
+                borderLeftWidth:    '1px',
+                borderRightWidth:   '1px',
+                borderStyle:        'solid',
+                borderColor:        '#c9e7e4',
+                fontSize:           '14px'
+            },
+            // resize边框的配置
+            dragBorder: {
+                topSize:        '2px',
+                bottomSize:     '2px',
+                leftSize:       '2px',
+                rightSize:      '2px',
+                topColor:       '#efdfed',
+                bottomColor:    '#ceb455',
+                leftColor:      '#cdef75',
+                rightColor:     '#a7bbef',
+            },
+            // 整体样式
+            dragWrap: {
+                borderWidth:    '1px',
+                borderStyle:    'solid',
+                borderColor:    'rgba(248, 233, 104, 0.42)',
+                boxShadow:      'rgba(130, 130, 130, 0.5) 0px 0px 4px 2px',
+                borderRadius:   '8px',
+            },
+            showStatusBar: false,                                // 是否显示状态信息栏
+            onWindowMove: function () {
+                // console.log('You had move the target dev window');
+            }
+        };
+
+        let $demoConfigForm = $('.demo-config-form'),
+            $demoConfigConfirmBtn = $('.demo-config-confirm-btn'),
+            $draggableDemoDev = $('.draggable-demo-dev');
+
+        $demoConfigConfirmBtn.on('click', function(){
+            let formDataObj = $demoConfigForm.serializeObject();
+            let formConfig = {
+                title:          formDataObj.draggableViewTitle,
+                enableDrag:     formDataObj.enableDrag === 'true',
+                enableResize:   formDataObj.enableResize === 'true',
+                showStatusInfo: formDataObj.showStatusInfo === 'true',
+
+            };
+            let config = $.extend(true, {}, optionDev, formConfig);
+            $draggableDemoDev.draggableView(config);
+            return false;
+        })
+            //.trigger('click');
+
+    });
+</script>
+</body>
+</html>

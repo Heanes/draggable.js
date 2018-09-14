@@ -18,112 +18,38 @@
 ;(function ($, window, document, undefined) {
     "use strict";
     let pluginName = 'draggableView';
-    let version = '1.0.0';
 
     let _default = {};
-    _default.option = {
-        title: '<h2 class="content-title">title</h2>',          // 拖拽窗体的标题
+    _default.setting = {
+        title:         '<h2 class="content-title">拖拽一下试试</h2>', // 拖拽窗体的标题
+        showStatusBar: false,                                       // 是否显示状态信息栏
 
-        // 窗体大小
-        width: 800,                                             // 窗体宽度
-        height: 800,                                            // 窗体高度
-        minWidth: 200,                                          // 最小窗体宽度
-        minHeight: 200,                                         // 最小窗体高度
-        maxWidth: undefined,                                    // 最大窗体宽度，为undefined时不限制
-        maxHeight: undefined,                                   // 最大窗体高度，为undefined时不限制
+        wrapType: 1,                                                // 添加窗体外套的方式， 1-从原始内容扩展，原始内容缩小；2-原始内容不动，向外扩展
 
-        showStatusBar: false,                                   // 是否显示状态信息栏
+        enableDrag:      true,                                      // 是否可以拖拽移动
+        dragDirection:   'all',                                     // 可以拖动的方向，x|y|all
+        dragLimitTop:    0,                                         // 拖拽限制顶部范围
+        dragLimitLeft:   0,                                         // 拖拽限制左侧范围
+        dragLimitBottom: 0,                                         // 拖拽限制底部范围
+        dragLimitRight:  0,                                         // 拖拽限制右侧范围
 
-        // 窗体样式
-        theme: 'default',                                       // 窗体风格
-
-        wrapType: 1,                                            // 添加窗体外套的方式， 1-从原始内容扩展，原始内容缩小；2-原始内容不动，向外扩展
-
-        // 窗体操作
-        showMinMenu: true,                                      // 是否显示最小化按钮
-        enableMin: true,                                        // 是否允许最小化
-        showMaxMenu: true,                                      // 是否显示最小化按钮
-        enableMax: true,                                        // 是否允许最大化
-        showCloseMenu: true,                                    // 是否显示关闭按钮
-        enableClose: true,                                      // 是否允许关闭
-        showStickMenu: false,                                   // 是否显示置顶窗口按钮
-        enableStick: false,                                     // 是否允许置顶窗口
-
-        // 窗体操作的事件
-        beforeClose: function(){
-
-        },
-        afterClose: function(){
-
-        },
-
-        beforeSetMin: function(){
-
-        },
-        afterSetMin: function(){
-
-        },
-
-        beforeSetMax: function(){
-
-        },
-        afterSetMax: function(){
-
-        },
-
-        beforeSetStick: function(){
-
-        },
-        afterSetStick: function(){
-
-        },
-
-        // 多标签
-        enableTabs: false,                                      // 是否允许多tab
-
-        enableDrag:      true,                                  // 是否可以拖拽移动
-        dragDirection:   'all',                                 // 可以拖动的方向，x|y|all
-        dragRangeOffset: {                                      // 拖动移动范围(总相对拖移量)
-            top: 100,                                           // 拖拽限制顶部范围
-            bottom: 100,                                        // 拖拽限制底部范围
-            left: 100,                                          // 拖拽限制左侧范围
-            right: 100                                          // 拖拽限制右侧范围
-        },
-        dragRangePosition: {                                    // 拖动移动范围(具体坐标范围)
-            top: 100,                                           // 拖拽限制顶部范围
-            bottom: 100,                                        // 拖拽限制底部范围
-            left: 100,                                          // 拖拽限制左侧范围
-            right: 100                                          // 拖拽限制右侧范围
-        },
-
-        enableDirectionKeyToMove:     true,                     // 是否允许按方向键移动窗体，仅当鼠标置于拖拽移动框位置时有效
-        directionKeyDownToMoveOffset: 1,                        // 按一次方向键移动窗体时的偏移量
-
-        enableResize:    true,                                  // 是否可以拖拽调整窗体大小
-        resizeMinWidth:  150,                                   // 调整大小后的最小宽度
-        resizeMinHeight: 150,                                   // 调整大小后的最小高度
-        resizeMaxWidth:  500,                                   // 调整大小后的最大高度
-        resizeMaxHeight: 500,                                   // 调整大小后的最大高度
-        resizeRangeOffset: {                                    // 拖动调整大小的范围(总相对调整量)
-            left: 100,
-            right: 100,
-            top: 100,
-            bottom: 100
-        },
-
-        // 窗体移动时的事件
-        onWindowMove:    undefined,
-
+        enableResize:                 true,                         // 是否可以拖拽调整窗体大小
+        enableDirectionKeyToMove:     true,                         // 是否允许按方向键移动窗体，当鼠标置于拖拽移动框位置时
+        directionKeyDownToMoveOffset: 1,                            // 按一次方向键移动窗体时的偏移量
+        resizeMinWidth:               150,                          // 调整大小后的最小宽度
+        resizeMinHeight:              150,                          // 调整大小后的最小高度
+        resizeMaxWidth:               500,                          // 调整大小后的最大高度
+        resizeMaxHeight:              500,                          // 调整大小后的最大高度
         // 显示内容的外套的配置
-        dragContentWrap: {
-            padding:     '18px',
-            bgColor:     '#ddedf1',
-            borderWidth: '10px',
-            borderColor: '#a0b3d6',
-            borderStyle: 'solid'
+        dragContentWrap:                  {
+            padding:        '18px',
+            bgColor:        '#ddedf1',
+            borderWidth:    '10px',
+            borderColor:    '#a0b3d6',
+            borderStyle:    'solid'
         },
         // 拖拽移动框的配置
-        dragMoveBar:     {
+        dragMoveBar:                  {
             height:            '80px',
             padding:           '0 10px',
             bgColor:           '#258cef',
@@ -137,34 +63,35 @@
             fontSize:          '14px'
         },
         // resize边框的配置
-        dragBorder:      {
-            topSize:     '60px',
-            bottomSize:  '60px',
-            leftSize:    '60px',
-            rightSize:   '60px',
-            topColor:    '#efdfed',
-            bottomColor: '#ceb455',
-            leftColor:   '#cdef75',
-            rightColor:  '#a7bbef',
-            bgColor:     'rgba(240, 243, 249, 0.44)'
+        dragBorder:                   {
+            topSize:        '60px',
+            bottomSize:     '60px',
+            leftSize:       '60px',
+            rightSize:      '60px',
+            topColor:       '#efdfed',
+            bottomColor:    '#ceb455',
+            leftColor:      '#cdef75',
+            rightColor:     '#a7bbef',
+            bgColor:        'rgba(240, 243, 249, 0.44)'
         },
         // 整体样式
-        dragWrap:        {
-            borderWidth:  '30px',
-            borderStyle:  'solid',
-            borderColor:  'rgba(248, 233, 104, 0.42)',
-            boxShadow:    'rgba(130, 130, 130, 0.5) 0px 0px 4px 2px',
-            borderRadius: '8px',
-        }
+        dragWrap:                     {
+            borderWidth:    '30px',
+            borderStyle:    'solid',
+            borderColor:    'rgba(248, 233, 104, 0.42)',
+            boxShadow:      'rgba(130, 130, 130, 0.5) 0px 0px 4px 2px',
+            borderRadius:   '8px',
+        },
+        // 窗体移动时的事件
+        onWindowMove:       undefined
     };
 
     let DraggableView = function (element, options) {
-        this._defaults  = this.getDefaults();
-        this.options    = null;
-        this.$element   = null;
+        this.$element = $(element);
+        this._defaults = _default;
         this._name = pluginName;
         this.version = 'v1.0.0';
-        this.init(element, options);
+        this.init(options);
         return {
             // Options (public access)
             options: this.options,
@@ -181,40 +108,22 @@
         };
     };
 
-    DraggableView.V = DraggableView.VERSION = version;
-    /**
-     * @doc 默认选项
-     * @type Object
-     */
-    DraggableView.DEFAULTS = _default;
-
     /**
      * @doc init
-     * @param element
      * @param options
      * @returns {DraggableView}
      */
-    DraggableView.prototype.init = function (element, options) {
-        this.$element = $(element);
-
+    DraggableView.prototype.init = function (options) {
         if(this.checkIsInitialized()){
             return this;
         }
-
-        this.$el_ = this.$element.clone(true);  // 保留一份原始dom
-
-        this.options = this.getOptions(options);
+        this.options = $.extend(true, {}, _default.setting, options);
         this.inElement = {
             $originContent:         undefined,
             $dragWrap:              undefined,
             $dragContentWrap:       undefined,
             $dragOperateWrap:       undefined,
             $dragMoveBar:           undefined,
-            $dragTitleWrap:         undefined,
-            $dragOpMenuWrap:        undefined,
-            $dragOpMenuMin:         undefined,
-            $dragOpMenuMax:         undefined,
-            $dragOpMenuClose:       undefined,
             $dragBorder:            undefined,
             $dragBorderTop:         undefined,
             $dragBorderBottom:      undefined,
@@ -349,10 +258,13 @@
     /**
      * @doc init
      * @param options
-     * @returns {boolean}
+     * @returns {DraggableView}
      */
     DraggableView.prototype.checkIsInitialized = function (options) {
-        return !!this.$element.hasClass('draggable-view-initialized');
+        if(this.$element.hasClass('draggable-view-initialized')){
+            return true;
+        }
+        return false;
     };
 
     /**
@@ -422,75 +334,20 @@
 
         this.bindDrag(options);
         this.bindResize(options);
-
-        this.bindMenuOperate(options);
-
         return this;
     };
 
     /**
-     * @doc 窗体操作菜单
+     * @doc 检查是否还能拖拽
      * @param options
-     * @author Heanes
-     * @time 2018-09-14 16:29:34 周五
-     */
-    DraggableView.prototype.bindMenuOperate = function (options) {
-        let _this = this;
-        // 是否允许关闭
-        if (options.enableClose) {
-            this.inElement.$dragOpMenuClose.on('click', function () {
-                _this.inElement.$dragWrap.remove();
-                alert('你关闭了窗口');
-            });
-        }
-
-        // 是否允许最小化
-        if (options.enableClose) {
-            this.inElement.$dragOpMenuMin.on('click', function () {
-                _this.inElement.$dragWrap.remove();
-                alert('你关闭了窗口');
-            });
-        }
-
-        // 是否允许最大化
-        if (options.enableClose) {
-            this.inElement.$dragOpMenuMax.on('click', function () {
-                _this.inElement.$dragWrap.remove();
-                alert('你关闭了窗口');
-            });
-        }
-
-        return this;
-    };
-
-    /**
-     * @doc 检查是否还能拖拽移动
-     * @param options
-     * @author Heanes
-     * @time 2018-09-11 18:25:28 周二
      */
     DraggableView.prototype.checkCanDrag = function (options) {
         // 配置项是否允许拖拽
-        if (!options.enableDrag) {
+        if (options.enableDrag || options.enableResize) {
             return false;
         }
 
         // 限制拖拽的范围
-    };
-
-    /**
-     * @doc 检查是否还能拖拽调整窗体大小
-     * @param options
-     * @author Heanes
-     * @time 2018-09-11 18:25:28 周二
-     */
-    DraggableView.prototype.checkCanResize = function (options) {
-        // 配置项是否允许拖拽
-        if (!options.enableResize) {
-            return false;
-        }
-
-        // 限制拖拽调整大小的范围
     };
 
     /**
@@ -536,7 +393,7 @@
 
             dynamic.mouseDownPosition.X = e.clientX;
             dynamic.mouseDownPosition.Y = e.clientY;
-            let targetPosition = getElementPosition(_this.inElement.$dragWrap);
+            let targetPosition = getTargetPosition(_this.inElement.$dragWrap);
             dynamic.currentPosition.left = targetPosition.left;
             dynamic.currentPosition.top = targetPosition.top;
         });
@@ -626,7 +483,7 @@
                 dynamic.moveOffset.offsetY = 0;
                 _this.mouseMoveToDrag(options);
             }
-            let targetPosition = getElementPosition(_this.inElement.$dragWrap);
+            let targetPosition = getTargetPosition(_this.inElement.$dragWrap);
             dynamic.currentPosition.left = targetPosition.left;
             dynamic.currentPosition.top = targetPosition.top;
         });
@@ -647,7 +504,7 @@
      * @returns {DraggableView}
      */
     DraggableView.prototype.bindResize = function (options) {
-        if (!options.enableResize) {
+        if (!options.enableDrag) {
             return this;
         }
         let _this = this, dynamic = this.data.dynamic, calculated = this.data.calculated;
@@ -687,7 +544,7 @@
 
             dynamic.mouseDownPosition.X = e.clientX;
             dynamic.mouseDownPosition.Y = e.clientY;
-            let targetPosition = getElementPosition(_this.inElement.$dragWrap);
+            let targetPosition = getTargetPosition(_this.inElement.$dragWrap);
             dynamic.currentPosition.left = targetPosition.left;
             dynamic.currentPosition.top = targetPosition.top;
 
@@ -800,7 +657,7 @@
     DraggableView.prototype.calculateRenderSize = function (options) {
         // 根据配置计算得到初始化时的显示信息
         // 1. 原始内容的position
-        let originContentPosition = getElementPosition(this.$element);
+        let originContentPosition = getTargetPosition(this.$element);
         let originContentWindow = getTargetWindowOuterSize(this.$element);
 
         let origin = this.data.origin, dynamic = this.data.dynamic;
@@ -870,28 +727,16 @@
         let $dratStatusWrap = $(this.template.dratStatusWrap);
         let $dragStatusInfo = $(this.template.dratStatusBar);
 
-        let $dragMoveBar            = $(this.template.dragMoveBar),
-            $dragTitleWrap          = $(this.template.dragTitleWrap),
-            $dragBorderTop          = $(this.template.dragBorderTop),
-            $dragBorderBottom       = $(this.template.dragBorderBottom),
-            $dragBorderLeft         = $(this.template.dragBorderLeft),
-            $dragBorderRight        = $(this.template.dragBorderRight),
-            $dragBorderTopLeft      = $(this.template.dragBorderTopLeft),
-            $dragBorderTopRight     = $(this.template.dragBorderTopRight),
-            $dragBorderBottomLeft   = $(this.template.dragBorderBottomLeft),
-            $dragBorderBottomRight  = $(this.template.dragBorderBottomRight),
-            $dragOpMenuWrap         = $(this.template.dragOpMenuWrap),
-            $dragOpMenuMin          = $(this.template.dragOpMenuMin),
-            $dragOpMenuMax          = $(this.template.dragOpMenuMax),
-            $dragOpMenuClose        = $(this.template.dragOpMenuClose);
-
-        if(options.showCloseMenu) $dragOpMenuWrap.append($dragOpMenuClose);
-        if(options.showMinMenu) $dragOpMenuWrap.append($dragOpMenuMin);
-        if(options.showMaxMenu) $dragOpMenuWrap.append($dragOpMenuMax);
-
-        $dragMoveBar.append($dragOpMenuWrap);
-
-        $dragMoveBar.append($dragTitleWrap.append(this.options.title));
+        let $dragMoveBar = $(this.template.dragMoveBar);
+        $dragMoveBar.append(this.options.title);
+        let $dragBorderTop = $(this.template.dragBorderTop),
+            $dragBorderBottom = $(this.template.dragBorderBottom),
+            $dragBorderLeft = $(this.template.dragBorderLeft),
+            $dragBorderRight = $(this.template.dragBorderRight),
+            $dragBorderTopLeft = $(this.template.dragBorderTopLeft),
+            $dragBorderTopRight = $(this.template.dragBorderTopRight),
+            $dragBorderBottomLeft = $(this.template.dragBorderBottomLeft),
+            $dragBorderBottomRight = $(this.template.dragBorderBottomRight);
 
         $dragOperateWrap.append($dragMoveBar)
             // 上边及上边两个角
@@ -923,11 +768,6 @@
         this.inElement.$dratStatusWrap        = $dratStatusWrap;
         this.inElement.$dragStatusInfo        = $dragStatusInfo;
         this.inElement.$dragMoveBar           = $dragMoveBar;
-        this.inElement.$dragTitleWrap         = $dragTitleWrap;
-        this.inElement.$dragOpMenuWrap        = $dragOpMenuWrap;
-        this.inElement.$dragOpMenuMin         = $dragOpMenuMin;
-        this.inElement.$dragOpMenuMax         = $dragOpMenuMax;
-        this.inElement.$dragOpMenuClose       = $dragOpMenuClose;
         this.inElement.$dragBorder            = $dragWrapNew.find('.drag-border');
         this.inElement.$dragBorderTop         = $dragBorderTop;
         this.inElement.$dragBorderBottom      = $dragBorderBottom;
@@ -1068,106 +908,26 @@
     };
 
     /**
-     * @doc 获取元素位置
-     * @param $element
-     * @returns {*}
-     */
-    DraggableView.prototype.getElementPosition = function ($element) {
-        $element = $element || this.$element;
-        var el     = $element[0];
-
-        var isBody = el.tagName.toUpperCase() === 'BODY';
-
-        var elRect    = el.getBoundingClientRect();
-        if (elRect.width == null) {
-            // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
-            elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
-        }
-        var isSvg = window.SVGElement && el instanceof window.SVGElement;
-        // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.
-        // See https://github.com/twbs/bootstrap/issues/20280
-        var elOffset  = isBody ? { top: 0, left: 0 } : (isSvg ? null : $element.offset());
-        var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() };
-        var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null;
-
-        return $.extend({}, elRect, scroll, outerDims, elOffset)
-    };
-
-    /**
      * @doc 模版
      */
     DraggableView.prototype.template = {
-        dragWrap:               '<div class="drag-wrap">',
-        dragContentWrap:        '<div class="drag-content-wrap">',
-        dragOperateWrap:        '<div class="drag-operate-wrap"></div>',
-        dragMoveBar:            '<div class="drag-move-bar"></div>',
-        dragTitleWrap:          '<div class="drag-title-wrap"></div>',
-        dragBorderTop:          '<div class="drag-border drag-border-top"></div>',
-        dragBorderBottom:       '<div class="drag-border drag-border-bottom"></div>',
-        dragBorderLeft:         '<div class="drag-border drag-border-left"></div>',
-        dragBorderRight:        '<div class="drag-border drag-border-right"></div>',
-        dragBorderTopLeft:      '<div class="drag-border drag-border-top-left"></div>',
-        dragBorderTopRight:     '<div class="drag-border drag-border-top-right"></div>',
-        dragBorderBottomLeft:   '<div class="drag-border drag-border-bottom-left"></div>',
-        dragBorderBottomRight:  '<div class="drag-border drag-border-bottom-right"></div>',
-        dratStatusWrap:         '<div class="drag-status-wrap"></div>',  // 状态栏
-        dratStatusBar:          '<div class="drag-status-bar"></div>',
-        dragOpMenuWrap:         '<div class="drag-op-menu-wrap"></div>',                                  // 窗体操作栏
-        dragOpMenuMin:          '<div class="drag-op-btn drag-op-menu-min"><span>-</span></div>',    // 最小化
-        dragOpMenuMax:          '<div class="drag-op-btn drag-op-menu-max"><span>+</span></div>',    // 最大化
-        dragOpMenuClose:        '<div class="drag-op-btn drag-op-menu-close"><span>x</span></div>',  // 关闭窗体
-        dragOpMenuPinUp:        '<div class="drag-op-btn drag-op-menu-pin-up"><span>x</span></div>',  // 关闭窗体
-    };
-
-    /**
-     * @doc 获取options
-     * @param options
-     * @returns {void | {}}
-     */
-    DraggableView.prototype.getOptions = function (options) {
-        return this.handleToStandardOption(options);
-    };
-
-    /**
-     * @doc 处理为合法的标准option
-     * @param options
-     * @returns {void | {}}
-     */
-    DraggableView.prototype.handleToStandardOption = function (options) {
-        let defaultOption = this.getDefaults().option;
-        options = $.extend({}, defaultOption, this.$element.data(), options);
-        return options;
-    };
-
-    /**
-     * @doc 刷新option
-     * @param options
-     * @returns {DraggableView}
-     */
-    DraggableView.prototype.refreshOption = function (options) {
-        this.options = $.extend(true, {}, this.options, options);
-        this.getOptions(this.options);
-
-        this.destroy();
-        this.init();
-        return this;
-    };
-
-    /**
-     * @doc 销毁插件功能
-     * @returns {DraggableView}
-     */
-    DraggableView.prototype.destroy = function () {
-        this.$element.html(this.$el_.html());
-        return this;
-    };
-
-    /**
-     * @doc 获取默认选项
-     * @returns Object
-     */
-    DraggableView.prototype.getDefaults = function () {
-        return DraggableView.DEFAULTS;
+        dragWrap:              '<div class="drag-wrap">',
+        dragContentWrap:       '<div class="drag-content-wrap">',
+        dragOperateWrap:       '<div class="drag-operate-wrap"></div>',
+        dragMoveBar:           '<div class="drag-move-bar"></div>',
+        dragBorderTop:         '<div class="drag-border drag-border-top"></div>',
+        dragBorderBottom:      '<div class="drag-border drag-border-bottom"></div>',
+        dragBorderLeft:        '<div class="drag-border drag-border-left"></div>',
+        dragBorderRight:       '<div class="drag-border drag-border-right"></div>',
+        dragBorderTopLeft:     '<div class="drag-border drag-border-top-left"></div>',
+        dragBorderTopRight:    '<div class="drag-border drag-border-top-right"></div>',
+        dragBorderBottomLeft:  '<div class="drag-border drag-border-bottom-left"></div>',
+        dragBorderBottomRight: '<div class="drag-border drag-border-bottom-right"></div>',
+        dratStatusWrap:        '<div class="drag-status-wrap"></div>',  // 状态栏
+        dratStatusBar:         '<div class="drag-status-bar"></div>',
+        dragOpMinSize:         '<div class="drag-op-min-size"></div>',   // 最小化
+        dragOpMaxSize:         '<div class="drag-op-max-size"></div>',   // 最大化
+        dragOpCloseView:       '<div class="drag-op-close-view"></div>',   // 关闭窗体
     };
 
     /**
@@ -1207,11 +967,11 @@
      * @param position
      */
     function moveTargetPosition($target, position) {
-        /*if (position.top || position.left) {
+        if (position.top || position.left) {
             $target.css({
                 position: 'fixed',
             });
-        }*/
+        }
         if (position.top) {
             $target.css({
                 top: position.top + 'px',
@@ -1225,29 +985,18 @@
     }
 
     /**
-     * @doc 获取元素的定位值
-     * @param $element
+     * @doc 获取目标dom的定位值
+     * @param $target
      * @returns {{top: number, left: number}}
      */
-    function getElementPosition($element) {
-        var el     = $element[0];
-
-        var isBody = el.tagName.toUpperCase() === 'BODY';
-
-        var elRect    = el.getBoundingClientRect();
-        if (elRect.width == null) {
-            // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
-            elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
+    function getTargetPosition($target) {
+        let positionTop = 0;
+        let positionLeft = 0;
+        if ($target) {
+            positionTop = $target.offset().top;
+            positionLeft = $target.offset().left;
         }
-        var isSvg = window.SVGElement && el instanceof window.SVGElement;
-        // Avoid using $.offset() on SVGs since it gives incorrect results in jQuery 3.
-        // See https://github.com/twbs/bootstrap/issues/20280
-        var elOffset  = isBody ? { top: 0, left: 0 } : (isSvg ? null : $element.offset());
-        var scroll    = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() };
-        var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null;
-
-        return $.extend({}, elRect, scroll, outerDims, elOffset)
-        //return this.getElementPosition($element)
+        return {top: positionTop, left: positionLeft};
     }
 
     /**
