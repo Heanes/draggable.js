@@ -21,32 +21,48 @@ html *, body * {
 
 /****************************** 页面样式 ******************************/
 .demo-wrap {
-  padding: 40px; }
-
-.draggable-demo-dev-wrap {
-  position: absolute;
-  top: 240px;
-  left: 200px; }
-  .draggable-demo-dev-wrap .draggable-demo-dev {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    z-index: 2;
-    background-color: #f7f7f7; }
-  .draggable-demo-dev-wrap .common-content {
-    width: 500px;
-    height: 300px;
+  padding: 20px; }
+  .demo-wrap .drag-wrap.drag-wrap-demo {
+    display: none; }
+  .demo-wrap .demo-item {
+    border-bottom: 1px solid #ddd; }
+    .demo-wrap .demo-item .drag-demo-table td {
+      vertical-align: top; }
+      .demo-wrap .demo-item .drag-demo-table td:nth-child(2) {
+        padding: 20px; }
+  .demo-wrap .common-content {
     padding: 10px;
-    font-size: 16px; }
-
-.demo-config {
-  position: absolute;
-  right: 10px;
-  top: 20%; }
-  .demo-config .demo-config-form .form-group {
+    font-size: 14px; }
+  .demo-wrap .demo-config .demo-config-form .form-group {
     margin: 10px 0; }
-  .demo-config .demo-config-form .form-handle {
+    .demo-wrap .demo-config .demo-config-form .form-group .form-field-label {
+      min-width: 120px; }
+  .demo-wrap .demo-config .demo-config-form .form-handle {
     margin: 20px 0;
     text-align: center; }
+
+.main.window-demo {
+  margin-top: 40px; }
+  .main.window-demo .drag-wrap {
+    position: relative;
+    display: inline-block;
+    width: 500px;
+    height: 500px;
+    margin: 20px;
+        /*&.mac{
+            top: 30px;
+            left: 30px;
+        }
+        &.windows10{
+            left: 560px;
+        }
+        &.windows7{
+            top: 560px;
+        }
+
+        &.windowsXp{
+            top: 560px;
+            left: 560px;
+        }*/ }
 
 /*# sourceMappingURL=demo.css.map */

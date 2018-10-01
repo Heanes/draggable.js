@@ -6,18 +6,21 @@
  */
 // 窗体展示内容区域样式
 // [配置项]，【整体窗体相关样式】
-$dragWrapBorderRadius: 5px;
-$dragWrapBoxShadow: 0 4px 24px 2px rgba(0, 0, 0, 0.3);
-$dragWrapBorder: 1px solid #ccc;
+$dragWrapBorderRadius: 3px;
+$dragWrapBoxShadow: 1px 1px 24px rgba(0, 0, 0, 0.3);
+$dragWrapBorder: 1px solid #3baced;
 $dragWrapBgColor: #fff;
 //$dragWrapBoxShadow: 0px 0px 10px 4px rgba(130, 130, 130, .5);
-// [配置项]，【窗体头部相关样式】
-$dragHeaderWrapHeight: 24px;
-$dragHeaderWrapBgColor: #eee;
 // 【拖拽的窗体内容区域的边框样式】
 $dragWrapBorderSize: 1px;
 $dragWrapBorderStyle: solid;
 $dragWrapBorderColor: rgba(248, 233, 104, 0.42);
+
+// [配置项]，【窗体头部相关样式】
+$dragHeaderWrapHeight: 30px;
+$dragHeaderWrapBgColor: #eee;
+
+$dragOpBtnWidth: 45px;
 // [配置项]，【状态栏相关样式】
 $dragStatusWrapHeight: 24px;
 $dragStatusWrapBgColor: #eee;
@@ -50,40 +53,52 @@ $dragBorderCornerWidth: 10px;
 $dragWrapWidth: 500px;
 $dragWrapHeight: 500px;
 
-$dragOpBtnColor: #222;
+$dragOpBtnColor: #16701a;
 $dragOpBtnHeight: 14px;
 
-.drag-wrap.mac{
+.drag-wrap.windows10{
     position: fixed;
+    width: $dragWrapWidth;
+    height: $dragWrapHeight;
     padding-bottom: $dragHeaderWrapHeight + $dragStatusWrapHeight;
     border: $dragWrapBorder;
     box-shadow: $dragWrapBoxShadow;
+    background-color: $dragWrapBgColor;
     border-radius: $dragWrapBorderRadius;
     z-index: 99;
-    background-color: $dragWrapBgColor;
 
     //头部区域
     .drag-header-wrap{
         position: relative;
         height: $dragHeaderWrapHeight;
+        line-height: $dragHeaderWrapHeight;
         background-color: $dragHeaderWrapBgColor;
         user-select: none;
 
-        .drag-icon-wrap,
-        .drag-title-wrap{
-            text-align: center;
-        }
-        .drag-header-operate-wrap,
-        .drag-icon-wrap{
+        .drag-header-operate-wrap{
             position: absolute;
         }
 
         .drag-icon-wrap{
+            display: inline-block;
+            text-align: center;
+            padding-left: 4px;
+            .drag-icon{
+                width: 1.5em;
+                height: $dragHeaderWrapHeight;
+                fill: currentColor;
+                padding: 2px;
+                overflow: hidden;
+                font-size: 14px;
+                vertical-align: top;
+            }
         }
 
         .drag-title-wrap{
-            line-height: $dragHeaderWrapHeight;
+            display: inline-block;
             font-size: 13px;
+            text-align: left;
+            padding: 0 10px;
 
             h1,h2,h3,h4,h5,h6{
                 margin: 0;
@@ -91,61 +106,61 @@ $dragOpBtnHeight: 14px;
             }
         }
 
-        $dragOpBtnWidth: 13px;
         .drag-header-operate-wrap{
             top: 0;
+            right: 0;
             height: 100%;
             padding-left: 8px;
             cursor: default;
+            font-size: 0;
             .drag-op-btn{
                 display: inline-block;
                 width: $dragOpBtnWidth;
-                height: $dragOpBtnWidth;
+                height: $dragHeaderWrapHeight;
                 vertical-align: middle;
-                margin-right: 4px;
                 font-size: 12px;
                 text-align: center;
-                border-radius: 50%;
+                //border-radius: 50%;
 
                 .drag-icon {
-                    display: none;
-                    width: $dragOpBtnWidth;
-                    height: $dragOpBtnWidth;
+                    width: 1em;
+                    height: 100%;
+                    vertical-align: -.15em;
                     fill: currentColor;
-                    padding: 2px;
                     overflow: hidden;
                     font-size: 14px;
+                    line-height: normal;
+                }
+
+                span{
+                    display: inline-block;
+                    height: $dragOpBtnWidth;
+                    line-height: $dragOpBtnWidth - 1;
                     vertical-align: top;
                     color: $dragOpBtnColor;
                 }
 
-                .drag-icon{
-                    line-height: $dragOpBtnWidth - 1;
-                }
-
                 &.drag-op-menu-min{
-                    background-color: #ffbd2e;
                     &:hover{
-                        box-shadow: 0 0 2px 1px rgba(171, 133, 23, .9);
+                        background-color: #ddd;
                     }
                 }
                 &.drag-op-menu-max{
-                    background-color: #27c93f;
                     &:hover{
-                        box-shadow: 0 0 2px 1px rgba(52, 125, 65, .9);
+                        background-color: #ddd;
                     }
                 }
                 &.drag-op-menu-close{
-                    background-color: #ff5f56;
                     &:hover{
-                        box-shadow: 0 0 2px 1px rgba(113, 57, 53, .9);
+                        background-color: #e81123;
+                        color: #fff;
                     }
                 }
             }
 
             &:hover{
                 .drag-op-btn{
-                    .drag-icon{
+                    span{
                         display: inline-block;
                     }
                 }
@@ -174,12 +189,12 @@ $dragOpBtnHeight: 14px;
             }
             // 上边框，从上方拖动[高度]
             &.drag-border-top{
-                top: -$dragBorderWidth/2;
+                top: -$dragBorderWidth/2;;
                 height: $dragBorderWidth;
             }
             // 下边框，从上方拖动[高度]
             &.drag-border-bottom{
-                bottom: -$dragBorderWidth/2;
+                bottom: -$dragBorderWidth/2;;
                 height: $dragBorderWidth;
             }
 
@@ -192,12 +207,12 @@ $dragOpBtnHeight: 14px;
             }
             // 左边框，从左方拖动[宽度]
             &.drag-border-left{
-                left: -$dragBorderWidth/2;
+                left: -$dragBorderWidth/2;;
                 width: $dragBorderWidth;
             }
             // 右边框，从右方拖动[宽度]
             &.drag-border-right{
-                right: -$dragBorderWidth/2;
+                right: -$dragBorderWidth/2;;
                 width: $dragBorderWidth;
             }
 
@@ -231,19 +246,19 @@ $dragOpBtnHeight: 14px;
 
             &.drag-border-top-left,
             &.drag-border-top-right{
-                top: -$dragBorderCornerWidth / 2;
+                top: -$dragBorderCornerWidth/2;
             }
             &.drag-border-top-left,
             &.drag-border-bottom-left{
-                left: -$dragBorderCornerWidth / 2;
+                left: -$dragBorderCornerWidth/2;
             }
             &.drag-border-top-right,
             &.drag-border-bottom-right{
-                right: -$dragBorderCornerWidth / 2;
+                right: -$dragBorderCornerWidth/2;
             }
             &.drag-border-bottom-left,
             &.drag-border-bottom-right{
-                bottom: -$dragBorderCornerWidth / 2;
+                bottom: -$dragBorderCornerWidth/2;
             }
             &.drag-border-top-left,
             &.drag-border-bottom-right{

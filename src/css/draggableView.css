@@ -4,206 +4,189 @@
  * @author Heanes
  * @time 2017-03-03 18:50:25 周五
  */
-.drag-wrap {
-  top: 91px;
-  left: 211px;
-  width: 778px;
-  height: 698px;
+.drag-wrap.mac {
   position: fixed;
-  display: inline-block;
+  padding-bottom: 48px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 24px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
   z-index: 99;
-  /*
-  border: $dragWrapBorderSize $dragWrapBorderStyle $dragWrapBorderColor;
-  border-radius: $dragBorderRadius;
-  box-shadow: $dragWrapBoxShadow;
-  */ }
-  .drag-wrap .drag-operate-wrap .drag-move-bar {
-    position: absolute;
-    text-align: center;
-    /*
-     left: $dragBorderLeftSize;
-     top: $dragBorderTopSize;
-     width: $dragMoveBarWidth;
-     height: $dragMoveBarHeight;
-     padding: 0 10px;
-     border-style: $dragMoveBarBorderStyle;
-     border-color: $dragMoveBarBorderColor;
-     border-top-width: $dragMoveBarBorderTopSize;
-     border-bottom-width: $dragMoveBarBorderBottomSize;
-     border-left-width: $dragMoveBarBorderLeftSize;
-     border-right-width: $dragMoveBarBorderRightSize;
-     line-height: $dragMoveBarHeight - ($dragMoveBarBorderTopSize + $dragMoveBarBorderBottomSize);
-     */
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    background-color: #258cef;
-    color: #fff;
-    cursor: move; }
-    .drag-wrap .drag-operate-wrap .drag-move-bar * {
-      margin: 0;
-      font-size: inherit;
-      font-weight: inherit; }
-    .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap {
-      position: absolute;
-      left: 2px;
-      top: 50%;
+  background-color: #fff; }
+  .drag-wrap.mac .drag-header-wrap {
+    position: relative;
+    height: 24px;
+    background-color: #eee;
+    user-select: none; }
+    .drag-wrap.mac .drag-header-wrap .drag-icon-wrap,
+    .drag-wrap.mac .drag-header-wrap .drag-title-wrap {
+      text-align: center; }
+    .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap,
+    .drag-wrap.mac .drag-header-wrap .drag-icon-wrap {
+      position: absolute; }
+    .drag-wrap.mac .drag-header-wrap .drag-title-wrap {
+      line-height: 24px;
+      font-size: 13px; }
+      .drag-wrap.mac .drag-header-wrap .drag-title-wrap h1, .drag-wrap.mac .drag-header-wrap .drag-title-wrap h2, .drag-wrap.mac .drag-header-wrap .drag-title-wrap h3, .drag-wrap.mac .drag-header-wrap .drag-title-wrap h4, .drag-wrap.mac .drag-header-wrap .drag-title-wrap h5, .drag-wrap.mac .drag-header-wrap .drag-title-wrap h6 {
+        margin: 0;
+        font-weight: normal; }
+    .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap {
+      top: 0;
       height: 100%;
-      margin-top: -8px;
+      padding-left: 8px;
       cursor: default; }
-      .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn {
+      .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn {
         display: inline-block;
-        border-radius: 50%;
-        width: 14px;
-        height: 14px;
+        width: 13px;
+        height: 13px;
+        vertical-align: middle;
         margin-right: 4px;
-        font-size: 12px; }
-        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn span {
+        font-size: 12px;
+        text-align: center;
+        border-radius: 50%; }
+        .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn .drag-icon {
           display: none;
-          height: 14px;
-          line-height: 14px;
+          width: 13px;
+          height: 13px;
+          fill: currentColor;
+          padding: 2px;
+          overflow: hidden;
+          font-size: 14px;
           vertical-align: top;
-          color: #16701a; }
-        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-min {
+          color: #222; }
+        .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn .drag-icon {
+          line-height: 12px; }
+        .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn.drag-op-menu-min {
           background-color: #ffbd2e; }
-          .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-min:hover {
-            box-shadow: 0 0 2px 1px rgba(253, 208, 78, 0.9); }
-        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-max {
+          .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn.drag-op-menu-min:hover {
+            box-shadow: 0 0 2px 1px rgba(171, 133, 23, 0.9); }
+        .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn.drag-op-menu-max {
           background-color: #27c93f; }
-          .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-max:hover {
-            box-shadow: 0 0 2px 1px rgba(24, 230, 60, 0.9); }
-        .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-close {
+          .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn.drag-op-menu-max:hover {
+            box-shadow: 0 0 2px 1px rgba(52, 125, 65, 0.9); }
+        .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn.drag-op-menu-close {
           background-color: #ff5f56; }
-          .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap .drag-op-btn.drag-op-menu-close:hover {
-            box-shadow: 0 0 2px 1px rgba(249, 58, 43, 0.9); }
-      .drag-wrap .drag-operate-wrap .drag-move-bar .drag-op-menu-wrap:hover .drag-op-btn span {
+          .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap .drag-op-btn.drag-op-menu-close:hover {
+            box-shadow: 0 0 2px 1px rgba(113, 57, 53, 0.9); }
+      .drag-wrap.mac .drag-header-wrap .drag-header-operate-wrap:hover .drag-op-btn .drag-icon {
         display: inline-block; }
-  .drag-wrap .drag-operate-wrap .drag-border {
-    /*background-color: $dragBorderBgColor;*/ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+  .drag-wrap.mac .drag-operate-wrap .drag-border {
+    background-color: transparent;
+    z-index: 2;
+    /*&.drag-border-top{
+        background-color: #efdfed;
+    }
+    // 下边框，从上方拖动[高度]
+    &.drag-border-bottom{
+        background-color: #89ce56;
+    }
+    // 左边框，从左方拖动[宽度]
+    &.drag-border-left{
+        background-color: #cdef75;
+    }
+    // 右边框，从右方拖动[宽度]
+    &.drag-border-right{
+        background-color: #a7bbef;
+    }
+    // 左上角，从左上方同时拖动宽高
+    &.drag-border-top-left{
+        background-color: #a7bbef;
+    }
+    // 右上角，从右上方同时拖动宽高
+    &.drag-border-top-right{
+        background-color: #d866ef;
+    }
+    // 左下角，从左下方同时拖动宽高
+    &.drag-border-bottom-left{
+        background-color: #89ef5a;
+    }
+    // 右下角，从右下方同时拖动宽高
+    &.drag-border-bottom-right{
+        background-color: #ef7f44;
+    }*/ }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-left {
       position: absolute; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
-      top: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
-      bottom: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
-      cursor: ns-resize; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
-      /*
-      left: $dragBorderCornerTopLeftWidth;
-      width: $dragBorderHorizontalWidth;
-      height: $dragBorderTopSize;
-      */
-      cursor: ns-resize; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
-      /*
-      left: $dragBorderCornerBottomLeftWidth;
-      width: $dragBorderHorizontalWidth;
-      height: $dragBorderBottomSize;
-      line-height: $dragBorderBottomSize;
-      */
-      padding: 0 10px;
-      cursor: ns-resize; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom {
+      cursor: ns-resize;
+      width: 100%;
       left: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
-      right: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
-      cursor: ew-resize; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
-      /*
-      top: $dragBorderCornerTopLeftHeight;
-      width: $dragBorderLeftSize;
-      height: $dragBorderVerticalHeight;
-      */ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
-      /*
-      top: $dragBorderCornerTopRightHeight;
-      width: $dragBorderRightSize;
-      height: $dragBorderVerticalHeight;
-      */ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top {
+      top: -2px;
+      height: 4px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom {
+      bottom: -2px;
+      height: 4px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-right, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-left {
+      cursor: ew-resize;
+      top: 0;
+      height: 100%; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-left {
+      left: -2px;
+      width: 4px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-right {
+      right: -2px;
+      width: 4px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-right {
       position: absolute; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
-      /*
-      width: $dragBorderCornerTopLeftWidth;
-      height: $dragBorderCornerTopLeftHeight;
-      border-top-left-radius: $dragBorderRadius;
-      */ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
-      /*
-      width: $dragBorderCornerTopRightWidth;
-      height: $dragBorderCornerTopRightHeight;
-      border-top-right-radius: $dragBorderRadius;
-      */ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
-      /*
-      width: $dragBorderCornerBottomLeftWidth;
-      height: $dragBorderCornerBottomLeftHeight;
-      border-bottom-left-radius: $dragBorderRadius;
-      */ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
-      /*
-      width: $dragBorderCornerBottomRightWidth;
-      height: $dragBorderCornerBottomRightHeight;
-      border-bottom-right-radius: $dragBorderRadius;
-      */ }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
-      top: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
-      left: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
-      right: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
-      bottom: 0; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-left {
+      width: 10px;
+      height: 10px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-right {
+      width: 10px;
+      height: 10px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-left {
+      width: 10px;
+      height: 10px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      width: 10px;
+      height: 10px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-right {
+      top: -5px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-left {
+      left: -5px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-right, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      right: -5px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-right {
+      bottom: -5px; }
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-right {
       cursor: nwse-resize; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
+    .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-bottom-left, .drag-wrap.mac .drag-operate-wrap .drag-border.drag-border-top-right {
       cursor: nesw-resize; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top {
-      background-color: #efdfed; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom {
-      background-color: #ceb455; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-left {
-      background-color: #cdef75; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-right {
-      background-color: #a7bbef; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-left {
-      background-color: #a7bbef; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-top-right {
-      background-color: #d866ef; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-left {
-      background-color: #89ef5a; }
-    .drag-wrap .drag-operate-wrap .drag-border.drag-border-bottom-right {
-      background-color: #ef7f44; }
-  .drag-wrap .drag-content-wrap {
-    position: absolute;
-    /*
-    left: $dragBorderLeftSize;
-    bottom: $dragBorderBottomSize;
-    width: $dragContentWrapWidth;
-    height: $dragContentWrapHeight;
-    padding: $dragContentWrapPadding;
-    border: $dragContentWrapBorderWidth $dragWrapBorderStyle $dragContentWrapBorderColor;*/
-    background-color: #ddedf1; }
-    .drag-wrap .drag-content-wrap .draggable-view-content {
+  .drag-wrap.mac .drag-content-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: 0px solid #d6cb8e;
+    /* 当窗体大小变得太小时，原始内容应出现滚动条 */
+    overflow: auto; }
+  .drag-wrap.mac .drag-status-wrap {
+    position: relative;
+    height: 24px;
+    padding: 0 4px;
+    background-color: #eee;
+    color: #333;
+    font-size: 13px;
+    line-height: 24px; }
+    .drag-wrap.mac .drag-status-wrap .drag-status-bar {
+      height: 100%;
       overflow: auto; }
-  .drag-wrap .drag-status-wrap {
-    position: absolute;
-    bottom: 0;
-    width: 100%; }
-    .drag-wrap .drag-status-wrap .drag-status-bar {
-      color: #fff;
-      font-size: 12px;
-      max-width: 100%;
-      max-height: 100%;
-      overflow: auto; }
-      .drag-wrap .drag-status-wrap .drag-status-bar .info-item {
+      .drag-wrap.mac .drag-status-wrap .drag-status-bar .info-item {
         margin-right: 10px; }
-        .drag-wrap .drag-status-wrap .drag-status-bar .info-item .field {
+        .drag-wrap.mac .drag-status-wrap .drag-status-bar .info-item .field {
           margin: 0 4px; }
-
-/* 当窗体大小变得太小时，原始内容应出现滚动条 */
-/*.drag-wrap .drag-content-wrap > *{overflow:auto;}*/
+  .drag-wrap.mac > div:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+  .drag-wrap.mac > div:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
+  .drag-wrap.mac.drag-min-size {
+    padding: 0; }
+    .drag-wrap.mac.drag-min-size .drag-content-wrap,
+    .drag-wrap.mac.drag-min-size .drag-status-wrap {
+      display: none; }
+  .drag-wrap.mac.drag-max-size {
+    width: 100%;
+    height: 100%; }
 
 /*# sourceMappingURL=draggableView.css.map */

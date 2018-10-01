@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="Heanes heanes.com email(heanes@163.com)">
+    <meta name="keywords" content="软件,商务,HTML,tutorials,source codes">
+    <meta name="description" content="描述">
+    <link rel="stylesheet" href="//ui.heanes.com/dist/css/heanesUI.css"/>
+    <link rel="stylesheet" href="../../src/css/draggableView.css"/>
+    <link rel="stylesheet" href="../../src/css/draggableView_windows10.css"/>
+    <link rel="stylesheet" href="../../src/css/draggableView_windows7.css"/>
+    <link rel="stylesheet" href="../static/css/demo.css"/>
+    <title>draggableView.js Demo</title>
+</head>
+<body>
+<div class="main window-demo">
+
+    <div class="drag-wrap mac">
+        <!-- 头部区域 -->
+        <div class="drag-header-wrap">
+            <!-- 图标区域 -->
+            <div class="drag-icon-wrap">
+                <i class="fa fa-address-book"></i>
+            </div>
+            <!-- 标题区域 -->
+            <div class="drag-title-wrap">
+                <h3>标题栏</h3>
+            </div>
+            <!-- 窗体操作栏区域 -->
+            <div class="drag-header-operate-wrap">
+                <div class="drag-op-btn drag-op-menu-close"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-close"></use></svg></div>
+                <div class="drag-op-btn drag-op-menu-min"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-min"></use></svg></div>
+                <div class="drag-op-btn drag-op-menu-max"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-max"></use></svg></div>
+            </div>
+        </div>
+        <!-- 窗体tab区域 -->
+        <div class="drag-group-tabs-wrap"></div>
+        <!-- 内容区域 -->
+        <div class="drag-content-wrap">
+            <div class="common-content draggable-demo-dev draggable-view-initialized draggable-view-content">
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+            </div>
+        </div>
+        <!-- 窗体操作区域 -->
+        <div class="drag-operate-wrap">
+            <div class="drag-border drag-border-top-left"></div>
+            <div class="drag-border drag-border-top"></div>
+            <div class="drag-border drag-border-top-right"></div>
+            <div class="drag-border drag-border-left"></div>
+            <div class="drag-border drag-border-right"></div>
+            <div class="drag-border drag-border-bottom-left"></div>
+            <div class="drag-border drag-border-bottom"></div>
+            <div class="drag-border drag-border-bottom-right"></div>
+        </div>
+        <!-- 状态栏区域 -->
+        <div class="drag-status-wrap">
+            <div class="drag-status-bar">当前位置: X: 30, Y: 30</div>
+        </div>
+    </div>
+
+    <div class="drag-wrap windows10">
+        <!-- 头部区域 -->
+        <div class="drag-header-wrap">
+            <!-- 图标区域 -->
+            <div class="drag-icon-wrap">
+                <i class="fa fa-address-book"></i>
+            </div>
+            <!-- 标题区域 -->
+            <div class="drag-title-wrap">
+                <h3>标题栏</h3>
+            </div>
+            <!-- 窗体操作栏区域 -->
+            <div class="drag-header-operate-wrap">
+                <div class="drag-op-btn drag-op-menu-min"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-min"></use></svg></div>
+                <div class="drag-op-btn drag-op-menu-max"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-max"></use></svg></div>
+                <div class="drag-op-btn drag-op-menu-close"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-destroy"></use></svg></div>
+            </div>
+        </div>
+        <!-- 窗体tab区域 -->
+        <div class="drag-group-tabs"></div>
+        <!-- 内容区域 -->
+        <div class="drag-content-wrap">
+            <div class="common-content draggable-demo-dev draggable-view-initialized draggable-view-content">
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+            </div>
+        </div>
+        <!-- 窗体操作区域 -->
+        <div class="drag-operate-wrap">
+            <div class="drag-border drag-border-top-left"></div>
+            <div class="drag-border drag-border-top"></div>
+            <div class="drag-border drag-border-top-right"></div>
+            <div class="drag-border drag-border-left"></div>
+            <div class="drag-border drag-border-right"></div>
+            <div class="drag-border drag-border-bottom-left"></div>
+            <div class="drag-border drag-border-bottom"></div>
+            <div class="drag-border drag-border-bottom-right"></div>
+        </div>
+        <!-- 状态栏区域 -->
+        <div class="drag-status-wrap">
+            <div class="drag-status-bar">当前位置: X: 30, Y: 30</div>
+        </div>
+    </div>
+
+    <div class="drag-wrap windows7">
+        <!-- 头部区域 -->
+        <div class="drag-header-wrap">
+            <!-- 图标区域 -->
+            <div class="drag-icon-wrap">
+                <i class="fa fa-address-book"></i>
+            </div>
+            <!-- 标题区域 -->
+            <div class="drag-title-wrap">
+                <h3>标题栏</h3>
+            </div>
+            <!-- 窗体操作栏区域 -->
+            <div class="drag-header-operate-wrap">
+                <div class="drag-op-btn drag-op-menu-min"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-min"></use></svg></div>
+                <div class="drag-op-btn drag-op-menu-max"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-max"></use></svg></div>
+                <div class="drag-op-btn drag-op-menu-close"><svg class="drag-icon" aria-hidden="true"><use xlink:href="#drag-icon-destroy"></use></svg></div>
+            </div>
+        </div>
+        <!-- 窗体tab区域 -->
+        <div class="drag-group-tabs"></div>
+        <!-- 内容区域 -->
+        <div class="drag-content-wrap">
+            <div class="common-content draggable-demo-dev draggable-view-initialized draggable-view-content">
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+                <p>This is test text just hold the place. This is long paragraph.</p>
+            </div>
+        </div>
+        <!-- 窗体操作区域 -->
+        <div class="drag-operate-wrap">
+            <div class="drag-border drag-border-top-left"></div>
+            <div class="drag-border drag-border-top"></div>
+            <div class="drag-border drag-border-top-right"></div>
+            <div class="drag-border drag-border-left"></div>
+            <div class="drag-border drag-border-right"></div>
+            <div class="drag-border drag-border-bottom-left"></div>
+            <div class="drag-border drag-border-bottom"></div>
+            <div class="drag-border drag-border-bottom-right"></div>
+        </div>
+        <!-- 状态栏区域 -->
+        <div class="drag-status-wrap">
+            <div class="drag-status-bar">当前位置: X: 30, Y: 30</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../static/vendor/js/jquery/2.2.4/jquery.2.2.4.min.js"></script>
+<script type="text/javascript" src="../../src/js/draggableView.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        console.clear();
+    });
+</script>
+</body>
+</html>
