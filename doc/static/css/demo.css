@@ -30,9 +30,6 @@ html *, body * {
       vertical-align: top; }
       .demo-wrap .demo-item .drag-demo-table td:nth-child(2) {
         padding: 20px; }
-  .demo-wrap .common-content {
-    padding: 10px;
-    font-size: 14px; }
   .demo-wrap .demo-config .demo-config-form .form-group {
     margin: 10px 0; }
     .demo-wrap .demo-config .demo-config-form .form-group .form-field-label {
@@ -41,6 +38,10 @@ html *, body * {
     margin: 20px 0;
     text-align: center; }
 
+.common-content {
+  padding: 10px;
+  font-size: 14px; }
+
 .main.window-demo {
   margin-top: 40px; }
   .main.window-demo .drag-wrap {
@@ -48,21 +49,6 @@ html *, body * {
     display: inline-block;
     width: 500px;
     height: 500px;
-    margin: 20px;
-        /*&.mac{
-            top: 30px;
-            left: 30px;
-        }
-        &.windows10{
-            left: 560px;
-        }
-        &.windows7{
-            top: 560px;
-        }
-
-        &.windowsXp{
-            top: 560px;
-            left: 560px;
-        }*/ }
+    margin: 20px; }
 
 /*# sourceMappingURL=demo.css.map */

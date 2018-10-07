@@ -6,7 +6,7 @@
  */
 // 窗体展示内容区域样式
 // [配置项]，【整体窗体相关样式】
-$dragWrapBorderRadius: 5px;
+$dragWrapBorderRadius: 7px;
 $dragWrapBoxShadow: 0 4px 24px 2px rgba(0, 0, 0, 0.3);
 $dragWrapBorder: 1px solid #ccc;
 $dragWrapBgColor: #fff;
@@ -327,12 +327,12 @@ $dragOpBtnHeight: 14px;
 
     // 窗体边框圆角内部样式修正
     > div:first-child{
-        border-top-left-radius: $dragWrapBorderRadius;
-        border-top-right-radius: $dragWrapBorderRadius;
+        border-top-left-radius: $dragWrapBorderRadius - 1;
+        border-top-right-radius: $dragWrapBorderRadius - 1;
     }
-    > div:last-child{
-        border-bottom-left-radius: $dragWrapBorderRadius;
-        border-bottom-right-radius: $dragWrapBorderRadius;
+    > div:nth-last-child(3){
+        border-bottom-left-radius: $dragWrapBorderRadius - 1;
+        border-bottom-right-radius: $dragWrapBorderRadius - 1;
     }
 
     // 最小化
@@ -347,5 +347,32 @@ $dragOpBtnHeight: 14px;
     &.drag-max-size{
         width: 100%;
         height: 100%;
+    }
+
+    .drag-window-move-shade {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        z-index: 2;
+    }
+
+    .drag-mouse-preventDefault {
+        display: none;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        background-color: transparent;
+        z-index: 2;
     }
 }

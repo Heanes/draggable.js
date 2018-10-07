@@ -45,13 +45,6 @@ html *, body *{
         }
     }
 
-    .common-content{
-        //width: 400px;
-        //height: 300px;
-        padding: 10px;
-        font-size: 14px;
-    }
-
     .demo-config{
 
         .demo-config-form{
@@ -72,6 +65,12 @@ html *, body *{
     }
 }
 
+.common-content{
+    //width: 400px;
+    //height: 300px;
+    padding: 10px;
+    font-size: 14px;
+}
 
 $dragWrapWidth: 500px;
 $dragWrapHeight: 500px;
@@ -83,22 +82,6 @@ $dragWrapHeight: 500px;
         width: $dragWrapWidth;
         height: $dragWrapHeight;
         margin: 20px;
-
-        /*&.mac{
-            top: 30px;
-            left: 30px;
-        }
-        &.windows10{
-            left: 560px;
-        }
-        &.windows7{
-            top: 560px;
-        }
-
-        &.windowsXp{
-            top: 560px;
-            left: 560px;
-        }*/
     }
 
 }
