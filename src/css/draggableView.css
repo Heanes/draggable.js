@@ -157,6 +157,7 @@
     height: 100%;
     padding: 10px;
     border: 0px solid #d6cb8e;
+    background-color: #fff;
     /* 当窗体大小变得太小时，原始内容应出现滚动条 */
     overflow: auto; }
   .drag-wrap.mac .drag-status-wrap {
@@ -177,7 +178,7 @@
   .drag-wrap.mac > div:first-child {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px; }
-  .drag-wrap.mac > div:nth-last-child(3) {
+  .drag-wrap.mac > div:nth-last-child(2) {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px; }
   .drag-wrap.mac.drag-min-size {
@@ -188,7 +189,17 @@
   .drag-wrap.mac.drag-max-size {
     width: 100%;
     height: 100%; }
-  .drag-wrap.mac .drag-window-move-shade {
+  .drag-wrap.mac .drag-wrap-background-shadow {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: -1; }
+  .drag-wrap.mac .drag-mouse-preventDefault {
     display: none;
     position: fixed;
     top: 0;
@@ -197,18 +208,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: transparent;
-    z-index: 2; }
-  .drag-wrap.mac .drag-mouse-preventDefault {
-    display: none;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
     background-color: transparent;
     z-index: 2; }
 

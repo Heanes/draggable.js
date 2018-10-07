@@ -296,6 +296,7 @@ $dragOpBtnHeight: 14px;
         height: 100%;
         padding: $dragContentWrapPadding;
         border: $dragContentWrapBorderWidth $dragWrapBorderStyle $dragContentWrapBorderColor;
+        background-color: #fff;
 
         /* 当窗体大小变得太小时，原始内容应出现滚动条 */
         overflow:auto;
@@ -330,7 +331,7 @@ $dragOpBtnHeight: 14px;
         border-top-left-radius: $dragWrapBorderRadius - 1;
         border-top-right-radius: $dragWrapBorderRadius - 1;
     }
-    > div:nth-last-child(3){
+    > div:nth-last-child(2){
         border-bottom-left-radius: $dragWrapBorderRadius - 1;
         border-bottom-right-radius: $dragWrapBorderRadius - 1;
     }
@@ -349,7 +350,19 @@ $dragOpBtnHeight: 14px;
         height: 100%;
     }
 
-    .drag-window-move-shade {
+    .drag-wrap-background-shadow{
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .3);
+        z-index: -1;
+    }
+
+    .drag-mouse-preventDefault {
         display: none;
         position: fixed;
         top: 0;
@@ -358,20 +371,6 @@ $dragOpBtnHeight: 14px;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: transparent;
-        z-index: 2;
-    }
-
-    .drag-mouse-preventDefault {
-        display: none;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
         background-color: transparent;
         z-index: 2;
     }
